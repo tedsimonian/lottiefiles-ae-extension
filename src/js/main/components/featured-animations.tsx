@@ -1,27 +1,12 @@
 import React from "react";
-import { useQuery } from "@apollo/client";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
-import { FEATURED_PUBLIC_ANIMATIONS } from "../../lib/graphql/queries";
-import LottieCard from "./lottie-card";
+import LottieCardGrid from "./lottie-card-grid";
 
 const FeaturedAnimations: React.FC = () => {
-  const { loading, error, data } = useQuery(FEATURED_PUBLIC_ANIMATIONS, {
-    variables: {
-      first: 10,
-    },
-  });
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-
   return (
-    <div className="grid grid-cols-3 gap-4">
-      {data?.featuredPublicAnimations.edges.map((edge) => (
-        <div key={edge.cursor} className="bg-white p-4 shadow-lg rounded-md">
-          <LottieCard animation={edge} />
-        </div>
-      ))}
+    <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">Featured Lottie Animations</h1>
+      <LottieCardGrid />
     </div>
   );
 };

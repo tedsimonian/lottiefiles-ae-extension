@@ -12,8 +12,23 @@ export const FEATURED_PUBLIC_ANIMATIONS = gql(`
           downloads
           lottieUrl
           name
+          likesCount
+          isLiked
+          createdBy {
+            avatarUrl
+            username
+            firstName
+            lastName
+       }
         }
       }
+      pageInfo {
+        endCursor
+        hasNextPage
+        hasPreviousPage
+        startCursor
+      }
+      totalCount
     }
   }
 `);
