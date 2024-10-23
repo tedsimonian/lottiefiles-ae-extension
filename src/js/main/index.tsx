@@ -4,7 +4,7 @@ import { ApolloProvider } from "@apollo/client";
 import { initBolt } from "../lib/utils/bolt";
 import apolloClient from "../lib/utils/apolloClient";
 
-import MainPanel from "./main";
+import MainPanel from "./main-panel";
 
 import "../shared/global.css";
 

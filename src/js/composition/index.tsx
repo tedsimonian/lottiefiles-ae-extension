@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { initBolt } from "../lib/utils/bolt";
 
-import CompositionPanel from "./composition";
+import CompositionPanel from "./composition-panel";
 
 import "../shared/global.css";
 
