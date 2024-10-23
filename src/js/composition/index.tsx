@@ -4,7 +4,7 @@ import { initBolt } from "../lib/utils/bolt";
 
 import CompositionPanel from "./composition-panel";
 
-import "../shared/global.css";
+import "../global.css";
 
 initBolt();
 

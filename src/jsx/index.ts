@@ -60,7 +60,7 @@ switch (getAppNameSafely()) {
     break;
 }
 
-export type Scripts = typeof aeft
+export type Scripts = typeof aeft;
 
 // https://extendscript.docsforadobe.dev/interapplication-communication/bridgetalk-class.html?highlight=bridgetalk#appname
 type ApplicationName =

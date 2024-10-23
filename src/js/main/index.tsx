@@ -6,7 +6,7 @@ import apolloClient from "../lib/utils/apolloClient";
 
 import MainPanel from "./main-panel";
 
-import "../shared/global.css";
+import "../global.css";
 
 initBolt();
 
