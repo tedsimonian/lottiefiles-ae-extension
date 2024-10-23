@@ -1,4 +1,6 @@
-<img src="src/js/assets/bolt-cep.svg" alt="Bolt CEP" title="Bolt CEP" width="400" />
+# Bolt CEP
+
+This project was bootstrapped with [Bolt CEP](https://github.com/hyperbrew/bolt-cep).
 
 A lightning-fast boilerplate for building Adobe CEP Extensions in React, Vue, or Svelte built on Vite + TypeScript + Sass
 
@@ -6,104 +8,7 @@ A lightning-fast boilerplate for building Adobe CEP Extensions in React, Vue, or
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/hyperbrew/bolt-cep/blob/master/LICENSE)
 [![Chat](https://img.shields.io/badge/chat-discord-7289da.svg)](https://discord.gg/PC3EvvuRbc)
 
-## Features
-
-- Lightning Fast Hot Module Replacement (HMR)
-- Write Modern ES6 in both the JavaScript and ExtendScript layers
-- Type-safe ExtendScript with Types-for-Adobe
-- End-to-End Type Safety with evalTS()
-- Easily configure in cep.config.ts
-- Setup for single or multi-panel extensions
-- Comes with multi-host-app configuration
-- Optimized Build Size
-- Easy Publish to ZXP for Distribution
-- Easy Package to ZIP archive with sidecar assets
-- GitHub Actions ready-to-go for ZXP Releases
-
-_Full Blog Post:_ https://hyperbrew.co/blog/bolt-cep-build-extensions-faster/
-
-### Dev Requirements
-
-- [Node.js](https://nodejs.org/en) 16 or later
-- [Yarn](https://yarnpkg.com/getting-started/install) 1.x.x aka classic (ensure by running `yarn set version classic`)
-
-### Compatibility
-
-- [Adobe CC Apps](https://www.adobe.com/creativecloud/desktop-app.html) version 2022 or later
-- Windows & Mac Intel
-- Mac Arm64 (M1 / M2) require special setup ([more details](#misc-troubleshooting))
-
----
-
-## Backers
-
-Huge thanks to our backers who have made this project possible!
-
-<a href="https://battleaxe.co/" target="_blank">
-<img src="https://battleaxe.dev/servile/logotype_lightgrey.png" alt="Battle Axe" title="Battle Axe" width="200" /></a>
-
-If you're interested in supporting this open-source project, please [contact the Hyper Brew team](https://hyperbrew.co/contact/).
-
----
-
-## Tools Built with Bolt CEP
-
-Tools like Rubberhose 3, Klutz GPT, Brevity, and more are powered by Bolt CEP! Check out the full library of tools built with Bolt CEP:
-
-[Built with Bolt CEP](https://hyperbrew.co/resources/bolt-cep/)
-
-<img src="./built-with-bolt-cep.png" alt="Battle Axe" title="Battle Axe" style="border-radius:5px" width="900" />
-
----
-
-## Support
-
-### Free Support 🙌
-
-If you have questions with getting started using Bolt CEP, feel free to ask and discuss in our free Discord community [Discord Community](https://discord.gg/PC3EvvuRbc).
-
-### Paid Priority Support 🥇
-
-If your team is interested in paid consulting or development with Bolt CEP, please [contact the Hyper Brew team](https://hyperbrew.co/contact/). More info on our [Adobe Plugin Development & Consulting Services](https://hyperbrew.co/landings/boost-development)
-
----
-
-## Can I use Bolt CEP in my free or commercial project?
-
-Yes! Bolt CEP is **100% free and open source**, being released under the MIT license with no attribution required. This means you are free to use it in your free or commercial projects.
-
-We would greatly appreciate it if you could provide a link back to this tool's info page in your product's site or about page:
-
-Bolt CEP Info Page Link: https://hyperbrew.co/resources/bolt-cep
-
-**Built with Bolt CEP** button graphics:
-
-**PNG Files**
-
-<div style="display:flex;gap:1rem;">
-<a href="./src/js/assets/built-with-bolt-cep/Built_With_BOLT_CEP_Logo_White_V01.png" target="_blank">
-<img src="./src/js/assets/built-with-bolt-cep/Built_With_BOLT_CEP_Logo_White_V01.png" width="200" /></a>
-
-<a href="./src/js/assets/built-with-bolt-cep/Built_With_BOLT_CEP_Logo_Black_V01.png" target="_blank">
-<img src="./src/js/assets/built-with-bolt-cep/Built_With_BOLT_CEP_Logo_Black_V01.png" width="200" /></a>
-
-</div>
-
-**SVG Files**
-
-<div style="display:flex;gap:1rem;">
-<a href="src/js/assets/built-with-bolt-cep/Built_With_BOLT_CEP_Logo_White_V01.svg" target="_blank">
-<img src="src/js/assets/built-with-bolt-cep/Built_With_BOLT_CEP_Logo_White_V01.svg" width="200" /></a>
-
-<a href="src/js/assets/built-with-bolt-cep/Built_With_BOLT_CEP_Logo_Black_V01.svg" target="_blank">
-<img src="src/js/assets/built-with-bolt-cep/Built_With_BOLT_CEP_Logo_Black_V01.svg" width="200" /></a>
-</div>
-
-## Quick Start
-
-<img src="src/js/assets/create-bolt-cep.jpg" alt="Bolt CEP">
-
-<img src="create-bolt-cep--demo.gif" alt="Bolt CEP">
+## Getting Started
 
 `yarn create bolt-cep`
 

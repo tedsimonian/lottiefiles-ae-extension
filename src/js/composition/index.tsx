@@ -2,12 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { initBolt } from "../lib/utils/bolt";
 
-import MainPanel from "./main";
+import CompositionPanel from "./composition";
 
 initBolt();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <MainPanel />
+    <CompositionPanel />
   </React.StrictMode>
 );
