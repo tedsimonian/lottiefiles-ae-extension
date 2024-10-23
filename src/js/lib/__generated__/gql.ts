@@ -14,7 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 const documents = {
-    "\n  query FeaturedPublicAnimations {\n    featuredPublicAnimations {\n      edges {\n        cursor\n        node {\n          bgColor\n          gifUrl\n          description\n          downloads\n          lottieUrl\n          name\n        }\n      }\n    }\n  }\n": types.FeaturedPublicAnimationsDocument,
+    "\n  query FeaturedPublicAnimations($after: String, $before: String, $first: Int, $last: Int, $orderBy: QuerySortOptions, $filters: AnimationFilter) {\n    featuredPublicAnimations(after: $after, before: $before, first: $first, last: $last, orderBy: $orderBy, filters: $filters) {\n      edges {\n        cursor\n        node {\n          bgColor\n          gifUrl\n          description\n          downloads\n          lottieUrl\n          name\n        }\n      }\n    }\n  }\n": types.FeaturedPublicAnimationsDocument,
 };
 
 /**
@@ -34,7 +34,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query FeaturedPublicAnimations {\n    featuredPublicAnimations {\n      edges {\n        cursor\n        node {\n          bgColor\n          gifUrl\n          description\n          downloads\n          lottieUrl\n          name\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query FeaturedPublicAnimations {\n    featuredPublicAnimations {\n      edges {\n        cursor\n        node {\n          bgColor\n          gifUrl\n          description\n          downloads\n          lottieUrl\n          name\n        }\n      }\n    }\n  }\n"];
+export function gql(source: "\n  query FeaturedPublicAnimations($after: String, $before: String, $first: Int, $last: Int, $orderBy: QuerySortOptions, $filters: AnimationFilter) {\n    featuredPublicAnimations(after: $after, before: $before, first: $first, last: $last, orderBy: $orderBy, filters: $filters) {\n      edges {\n        cursor\n        node {\n          bgColor\n          gifUrl\n          description\n          downloads\n          lottieUrl\n          name\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query FeaturedPublicAnimations($after: String, $before: String, $first: Int, $last: Int, $orderBy: QuerySortOptions, $filters: AnimationFilter) {\n    featuredPublicAnimations(after: $after, before: $before, first: $first, last: $last, orderBy: $orderBy, filters: $filters) {\n      edges {\n        cursor\n        node {\n          bgColor\n          gifUrl\n          description\n          downloads\n          lottieUrl\n          name\n        }\n      }\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
