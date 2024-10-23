@@ -30,10 +30,10 @@ const LottieCard: React.FC<LottieCardProps> = ({ animation }) => {
 
   return (
     <Card
-      className="w-full h-[360px] flex flex-col transition-shadow hover:shadow-lg"
+      className="w-full h-[320px] flex flex-col transition-shadow hover:shadow-lg overflow-hidden"
       style={{ backgroundColor: animation.node.bgColor || "white" }}
     >
-      <CardHeader className="p-4 flex-grow">
+      <CardHeader className="p-4 flex-grow justify-center">
         {animation.node.lottieUrl && (
           <div className="flex justify-center items-center">
             <DotLottieReact
@@ -41,6 +41,7 @@ const LottieCard: React.FC<LottieCardProps> = ({ animation }) => {
               loop
               autoplay
               dotLottieRefCallback={dotLottieRefCallback}
+              style={{ maxWidth: "450px" }}
             />
             {!dotLottie && <Loader2 className="h-8 w-8 animate-spin" />}
           </div>
@@ -49,7 +50,7 @@ const LottieCard: React.FC<LottieCardProps> = ({ animation }) => {
       <CardContent className="flex flex-col justify-between">
         <CardTitle
           className={cn(
-            "text-lg mb-2 line-clamp-2",
+            "text-lg mb-2",
             getReadableTextColor(animation.node.bgColor || "white")
           )}
         >
