@@ -4,6 +4,8 @@ import { initBolt } from "../lib/utils/bolt";
 
 import CompositionPanel from "./composition";
 
+import "../shared/global.css";
+
 initBolt();
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
