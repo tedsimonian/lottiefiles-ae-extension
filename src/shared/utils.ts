@@ -64,3 +64,27 @@ export const getReadableTextColor = (backgroundColor: string): string => {
 
   return whiteContrast > blackContrast ? "text-white" : "text-black";
 };
+
+export type RenderProgress = {
+  progress: number;
+  status: "idle" | "rendering" | "completed";
+};
+
+/**
+ * Simulate a render process
+ * @param id - The id of the item to render
+ * @param onProgress - A callback function to update the progress
+ */
+export async function renderItem(
+  id: number,
+  onProgress: (progress: number) => void
+): Promise<void> {
+  const duration = Math.random() * 3000 + 2000; // Random duration between 2-5 seconds
+  const steps = 10;
+  const stepDuration = duration / steps;
+
+  for (let i = 1; i <= steps; i++) {
+    await new Promise((resolve) => setTimeout(resolve, stepDuration));
+    onProgress(i * 10);
+  }
+}

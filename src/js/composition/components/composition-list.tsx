@@ -1,16 +1,12 @@
 import React from "react";
 
 import { CompositionItem } from "../components/composition-item";
-
-type Composition = {
-  id: string;
-  name: string;
-};
+import { Composition } from "../../types";
 
 type CompositionListProps = {
   compositions: Composition[];
-  selectedCompositions: string[];
-  onCheckboxChange: (id: string) => void;
+  selectedCompositions: number[];
+  onCheckboxChange: (id: number) => void;
 };
 
 export const CompositionList: React.FC<CompositionListProps> = ({

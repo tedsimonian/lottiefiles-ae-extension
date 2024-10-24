@@ -2,16 +2,12 @@ import { ChevronRight } from "lucide-react";
 
 import { Checkbox } from "../../../shared/components/ui/checkbox";
 import { Button } from "../../../shared/components/ui/button";
-
-type Composition = {
-  id: string;
-  name: string;
-};
+import { Composition } from "../../types";
 
 type CompositionItemProps = {
   composition: Composition;
   isSelected: boolean;
-  onCheckboxChange: (id: string) => void;
+  onCheckboxChange: (id: number) => void;
 };
 
 export const CompositionItem: React.FC<CompositionItemProps> = ({
@@ -23,12 +19,15 @@ export const CompositionItem: React.FC<CompositionItemProps> = ({
     <div className="flex items-center justify-between py-2 border-b border-gray-700">
       <div className="flex items-center">
         <Checkbox
-          id={composition.id}
+          id={composition.id.toString()}
           checked={isSelected}
           onCheckedChange={() => onCheckboxChange(composition.id)}
           className="border-teal-500 text-teal-500"
         />
-        <label htmlFor={composition.id} className="ml-2 text-sm font-medium">
+        <label
+          htmlFor={composition.id.toString()}
+          className="ml-2 text-sm font-medium"
+        >
           {composition.name}
         </label>
       </div>

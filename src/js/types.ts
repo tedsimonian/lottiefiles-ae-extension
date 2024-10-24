@@ -3,3 +3,8 @@
  * @template T The type of the array
  */
 export type ArrayItem<T> = T extends (infer U)[] ? U : never;
+
+export type Composition = {
+  id: number;
+  name: string;
+};

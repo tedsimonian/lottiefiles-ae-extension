@@ -4,24 +4,21 @@ import { SearchBar } from "./search-bar";
 import { CompositionList } from "./composition-list";
 import { ControlPanel } from "./control-panel";
 import { Checkbox } from "../../../shared/components/ui/checkbox";
+import { Composition } from "../../types";
 
-type Composition = {
-  id: string;
-  name: string;
+type RenderCompositionsProps = {
+  compositions: Composition[];
 };
 
-export const RenderCompositions: React.FC = () => {
-  const [compositions] = useState<Composition[]>([
-    { id: "1", name: "Running puppy" },
-    { id: "2", name: "Skating puppy" },
-    { id: "3", name: "Walking puppy" },
-  ]);
-  const [selectedCompositions, setSelectedCompositions] = useState<string[]>(
+export const RenderCompositions: React.FC<RenderCompositionsProps> = ({
+  compositions,
+}) => {
+  const [selectedCompositions, setSelectedCompositions] = useState<number[]>(
     []
   );
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleCheckboxChange = (id: string) => {
+  const handleCheckboxChange = (id: number) => {
     setSelectedCompositions((prev) =>
       prev.includes(id) ? prev.filter((compId) => compId !== id) : [...prev, id]
     );
