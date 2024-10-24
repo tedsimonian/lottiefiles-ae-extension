@@ -4,13 +4,13 @@ import { Loader2 } from "lucide-react";
 
 import { FEATURED_PUBLIC_ANIMATIONS } from "../../lib/graphql/queries";
 
-import LottieCardGrid from "./lottie-card-grid";
+import { LottieAnimationGrid } from "./lottie-card-grid";
 import { Button } from "../../../shared/components/ui/button";
-import EmptyData from "../../../shared/components/empty-data";
+import { EmptyData } from "../../../shared/components/empty-data";
 
 const QUERY_FETCH_LIMIT = 12;
 
-const FeaturedAnimations: React.FC = () => {
+export const FeaturedAnimations: React.FC = () => {
   const [hasNextPage, setHasNextPage] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
@@ -62,7 +62,7 @@ const FeaturedAnimations: React.FC = () => {
       <h1 className="text-3xl font-bold mb-8">Featured Lottie Animations</h1>
 
       {/* In the case there is no data, we want to show the empty data component, but only if the data is not loading still */}
-      {data && <LottieCardGrid data={data} />}
+      {data && <LottieAnimationGrid data={data} />}
       {!data && !loading && (
         <EmptyData message="No featured animations found" />
       )}

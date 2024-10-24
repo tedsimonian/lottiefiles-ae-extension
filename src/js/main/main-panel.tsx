@@ -1,6 +1,6 @@
 import FeaturedAnimations from "./components/featured-animations";
 
-const MainPanel = () => {
+export const MainPanel = () => {
   return (
     <div>
       <FeaturedAnimations />

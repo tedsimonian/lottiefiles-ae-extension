@@ -9,7 +9,7 @@ type EmptyDataProps = {
   borderColor?: string;
 };
 
-const EmptyData: React.FC<EmptyDataProps> = ({
+export const EmptyData: React.FC<EmptyDataProps> = ({
   message = "No data available",
   icon,
   className = "",

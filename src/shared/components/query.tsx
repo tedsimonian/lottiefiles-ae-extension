@@ -23,7 +23,7 @@ type QueryComponentProps<TQuery> = {
 
 // Maybe I can use this later, but currently I don't need it
 
-const Query = <TQuery,>({
+export const Query = <TQuery,>({
   query,
   variables,
   children,

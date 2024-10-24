@@ -25,7 +25,7 @@ type LottieCardProps = {
   >;
 };
 
-const LottieCard: React.FC<LottieCardProps> = ({ animation }) => {
+export const LottieCard: React.FC<LottieCardProps> = ({ animation }) => {
   const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
 
   const dotLottieRefCallback = (dotLottie: DotLottie) => {
