@@ -8,12 +8,16 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+} from "../../../shared/components/ui/card";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "../../../shared/components/ui/avatar";
 
 import { FeaturedPublicAnimationsQuery } from "../../lib/__generated__/graphql";
 import { ArrayItem } from "../../types";
-import { cn, getReadableTextColor } from "../../lib/utils/helpers";
+import { cn, getReadableTextColor } from "../../../shared/utils";
 
 type LottieCardProps = {
   animation: ArrayItem<
@@ -54,7 +58,13 @@ const LottieCard: React.FC<LottieCardProps> = ({ animation }) => {
             getReadableTextColor(animation.node.bgColor || "white")
           )}
         >
-          {animation.node.name}
+          <a
+            href={animation.node.url ?? "#"}
+            target="_blank"
+            className="hover:underline"
+          >
+            {animation.node.name}
+          </a>
         </CardTitle>
       </CardContent>
       <CardFooter
@@ -73,7 +83,12 @@ const LottieCard: React.FC<LottieCardProps> = ({ animation }) => {
               {animation.node.createdBy?.username}
             </AvatarFallback>
           </Avatar>
-          <span className="text-sm text-muted-foreground">
+          <span
+            className={cn(
+              "text-sm",
+              getReadableTextColor(animation.node.bgColor || "white")
+            )}
+          >
             {animation.node.createdBy?.username}
           </span>
         </div>

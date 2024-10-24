@@ -7,6 +7,7 @@ export const FEATURED_PUBLIC_ANIMATIONS = gql(`
         cursor
         node {
           bgColor
+          url
           gifUrl
           description
           downloads
