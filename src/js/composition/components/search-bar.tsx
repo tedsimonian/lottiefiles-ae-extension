@@ -4,19 +4,19 @@ import { Input } from "../../../shared/components/ui/input";
 
 type SearchBarProps = {
   searchTerm: string;
-  setSearchTerm: (term: string) => void;
+  onSearchChange: (term: string) => void;
 };
 
 export const SearchBar: React.FC<SearchBarProps> = ({
   searchTerm,
-  setSearchTerm,
+  onSearchChange,
 }: SearchBarProps) => {
   return (
     <Input
       type="text"
       placeholder="Search compositions..."
       value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
+      onChange={(e) => onSearchChange(e.target.value)}
       className="flex-grow bg-gray-800 border-gray-700 text-white placeholder-gray-400"
     />
   );

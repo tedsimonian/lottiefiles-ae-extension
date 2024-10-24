@@ -1,27 +1,30 @@
 import React from "react";
 
 import { CompositionItem } from "../components/composition-item";
-import { Composition } from "../../types";
+import { CompositionRenderItem } from "../../types";
 
 type CompositionListProps = {
-  compositions: Composition[];
-  selectedCompositions: number[];
-  onCheckboxChange: (id: number) => void;
+  items: CompositionRenderItem[];
+  onToggle: (id: number) => void;
+  onRender: (id: number) => void;
+  isRendering: boolean;
 };
 
 export const CompositionList: React.FC<CompositionListProps> = ({
-  compositions,
-  selectedCompositions,
-  onCheckboxChange,
+  items,
+  onToggle,
+  onRender,
+  isRendering,
 }: CompositionListProps) => {
   return (
     <div className="flex-grow overflow-auto">
-      {compositions.map((comp) => (
+      {items.map((item) => (
         <CompositionItem
-          key={comp.id}
-          composition={comp}
-          isSelected={selectedCompositions.includes(comp.id)}
-          onCheckboxChange={onCheckboxChange}
+          key={item.id}
+          item={item}
+          onToggle={onToggle}
+          onRender={onRender}
+          isRendering={isRendering}
         />
       ))}
     </div>

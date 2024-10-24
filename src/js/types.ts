@@ -8,3 +8,9 @@ export type Composition = {
   id: number;
   name: string;
 };
+
+export type CompositionRenderItem = Composition & {
+  checked: boolean;
+  status: "idle" | "rendering" | "completed";
+  progress: number;
+};
