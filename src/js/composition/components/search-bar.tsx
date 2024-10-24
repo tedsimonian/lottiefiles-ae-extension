@@ -17,7 +17,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
       placeholder="Search compositions..."
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
-      className="mb-4 bg-gray-800 border-gray-700 text-white placeholder-gray-400"
+      className="flex-grow bg-gray-800 border-gray-700 text-white placeholder-gray-400"
     />
   );
 };

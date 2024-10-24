@@ -4,27 +4,16 @@ import { Button } from "../../../shared/components/ui/button";
 
 type ControlPanelProps = {
   selectedCount: number;
-  totalCount: number;
-  onBulkCheck: () => void;
 };
 
 export const ControlPanel: React.FC<ControlPanelProps> = ({
   selectedCount,
-  totalCount,
-  onBulkCheck,
 }: ControlPanelProps) => {
   return (
-    <div className="mt-4 flex justify-between items-center">
-      <Button
-        onClick={onBulkCheck}
-        variant="outline"
-        className="text-teal-500 border-teal-500 hover:bg-teal-500 hover:text-white"
-      >
-        {selectedCount === totalCount ? "Uncheck All" : "Check All"}
-      </Button>
+    <div className="mt-4 flex justify-center self-end w-full">
       <Button
         variant="default"
-        className="bg-teal-500 hover:bg-teal-600 text-white"
+        className="bg-teal-500 hover:bg-teal-600 text-white w-full"
       >
         Render ({selectedCount})
       </Button>

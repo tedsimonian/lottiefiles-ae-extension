@@ -58,7 +58,7 @@ export const FeaturedAnimations: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div>
       <h1 className="text-3xl font-bold mb-8">Featured Lottie Animations</h1>
 
       {/* In the case there is no data, we want to show the empty data component, but only if the data is not loading still */}
