@@ -13,6 +13,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
     <div className="mt-4 flex justify-center self-end w-full">
       <Button
         variant="default"
+        disabled={selectedCount === 0}
         className="bg-teal-500 hover:bg-teal-600 text-white w-full"
       >
         Render ({selectedCount})

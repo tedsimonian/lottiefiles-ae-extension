@@ -1,6 +1,7 @@
 import { ChevronRight } from "lucide-react";
 
 import { Checkbox } from "../../../shared/components/ui/checkbox";
+import { Button } from "../../../shared/components/ui/button";
 
 type Composition = {
   id: string;
@@ -31,7 +32,13 @@ export const CompositionItem: React.FC<CompositionItemProps> = ({
           {composition.name}
         </label>
       </div>
-      <ChevronRight className="h-5 w-5 text-teal-500" />
+      <Button
+        variant="ghost"
+        className="bg-teal-500 hover:bg-teal-800 transition-colors duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 active:translate-y-0 active:shadow-md"
+        size="icon"
+      >
+        <ChevronRight className="h-5 w-5 text-white" />
+      </Button>
     </div>
   );
 };
