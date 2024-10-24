@@ -45,7 +45,7 @@ export const LottieCard: React.FC<LottieCardProps> = ({ animation }) => {
               loop
               autoplay
               dotLottieRefCallback={dotLottieRefCallback}
-              style={{ maxWidth: "450px" }}
+              style={{ maxWidth: "350px" }}
             />
             {!dotLottie && <Loader2 className="h-8 w-8 animate-spin" />}
           </div>

@@ -37,26 +37,36 @@ export const RenderCompositions: React.FC<RenderCompositionsProps> = ({
     [items, searchTerm]
   );
 
-  const { checkedItems, activeItems, allChecked } = useMemo(
+  const { checkedItems, activeFilteredItems, allFilteredChecked } = useMemo(
     () => ({
       checkedItems: items.filter(
         (item) => item.checked && item.status !== "completed"
       ),
-      activeItems: items.filter((item) => item.status !== "completed"),
-      allChecked:
-        items.length > 0 &&
-        items.every((item) => item.checked || item.status === "completed"),
+      activeFilteredItems: filteredItems.filter(
+        (item) => item.status !== "completed"
+      ),
+      allFilteredChecked:
+        filteredItems.length > 0 &&
+        filteredItems.every(
+          (item) => item.checked || item.status === "completed"
+        ),
     }),
-    [items]
+    [items, filteredItems]
   );
 
-  const toggleAll = useCallback((checked: boolean) => {
-    setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.status !== "completed" ? { ...item, checked } : item
-      )
-    );
-  }, []);
+  const toggleAll = useCallback(
+    (checked: boolean) => {
+      setItems((prevItems) =>
+        prevItems.map((item) =>
+          filteredItems.some((filteredItem) => filteredItem.id === item.id) &&
+          item.status !== "completed"
+            ? { ...item, checked }
+            : item
+        )
+      );
+    },
+    [filteredItems]
+  );
 
   const toggleItem = useCallback((id: number) => {
     setItems((prevItems) =>
@@ -78,7 +88,6 @@ export const RenderCompositions: React.FC<RenderCompositionsProps> = ({
     },
     []
   );
-
   const renderSingleItem = useCallback(
     async (id: number) => {
       setIsRendering(true);
@@ -107,9 +116,9 @@ export const RenderCompositions: React.FC<RenderCompositionsProps> = ({
       <div className="flex items-center mb-4">
         <Checkbox
           id="check-all"
-          checked={allChecked}
+          checked={allFilteredChecked}
           onCheckedChange={(checked) => toggleAll(checked as boolean)}
-          disabled={activeItems.length === 0}
+          disabled={activeFilteredItems.length === 0}
           className="mr-2 border-teal-500 text-teal-500"
         />
         <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
