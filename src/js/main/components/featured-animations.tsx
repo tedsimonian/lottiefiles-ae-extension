@@ -8,7 +8,7 @@ import { LottieAnimationGrid } from "./lottie-card-grid";
 import { Button } from "../../../shared/components/ui/button";
 import { EmptyData } from "../../../shared/components/empty-data";
 
-const QUERY_FETCH_LIMIT = 12;
+const QUERY_FETCH_LIMIT = 9;
 
 export const FeaturedAnimations: React.FC = () => {
   const [hasNextPage, setHasNextPage] = useState(true);
@@ -33,22 +33,30 @@ export const FeaturedAnimations: React.FC = () => {
     fetchMore({
       variables: {
         first: QUERY_FETCH_LIMIT,
-        after: data?.featuredPublicAnimations.pageInfo.endCursor,
+        after: data?.featuredPublicAnimations?.pageInfo?.endCursor,
       },
       updateQuery: (prevResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult) return prevResult;
+        if (!fetchMoreResult || !fetchMoreResult.featuredPublicAnimations)
+          return prevResult;
 
-        const { edges: newEdges, pageInfo } =
-          fetchMoreResult.featuredPublicAnimations;
+        const {
+          edges: newEdges = [],
+          pageInfo,
+          totalCount,
+        } = fetchMoreResult.featuredPublicAnimations;
 
-        setHasNextPage(pageInfo.hasNextPage);
+        setHasNextPage(pageInfo?.hasNextPage ?? false);
 
         return {
           featuredPublicAnimations: {
             __typename: prevResult.featuredPublicAnimations.__typename,
-            edges: [...prevResult.featuredPublicAnimations.edges, ...newEdges],
-            pageInfo,
-            totalCount: fetchMoreResult.featuredPublicAnimations.totalCount,
+            edges: [
+              ...(prevResult.featuredPublicAnimations?.edges || []),
+              ...(newEdges || []),
+            ],
+            pageInfo: pageInfo || prevResult.featuredPublicAnimations.pageInfo,
+            totalCount:
+              totalCount ?? prevResult.featuredPublicAnimations.totalCount,
           },
         };
       },

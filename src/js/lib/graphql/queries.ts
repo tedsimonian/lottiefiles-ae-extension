@@ -12,6 +12,7 @@ export const FEATURED_PUBLIC_ANIMATIONS = gql(`
           description
           downloads
           lottieUrl
+          jsonUrl
           name
           likesCount
           isLiked

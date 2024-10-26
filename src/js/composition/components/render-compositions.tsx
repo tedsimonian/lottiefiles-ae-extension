@@ -1,11 +1,13 @@
 import React, { useCallback, useMemo, useState } from "react";
+import { useMutation } from "react-query";
 
 import { SearchBar } from "./search-bar";
 import { CompositionList } from "./composition-list";
 import { ControlPanel } from "./control-panel";
 import { Checkbox } from "../../../shared/components/ui/checkbox";
 import { Composition, CompositionRenderItem } from "../../types";
-import { renderItem, RenderProgress } from "../../../shared/utils";
+import { evalTS } from "../../lib/utils/bolt";
+import { LottieAnimation } from "../../../jsx/global";
 
 type RenderCompositionsProps = {
   compositions: Composition[];
@@ -16,10 +18,16 @@ const appendStatusAndProgress = (
 ): CompositionRenderItem[] => {
   return items.map((item) => ({
     ...item,
+    lottieJSON: null,
     checked: false,
-    status: "idle",
-    progress: 0,
+    rendering: false,
   }));
+};
+
+const renderCompositionToLottieJSONPayload = async (
+  comp: Composition
+): Promise<LottieAnimation> => {
+  return evalTS("convertCompositionToLottieJSONPayload", comp.id);
 };
 
 export const RenderCompositions: React.FC<RenderCompositionsProps> = ({
@@ -27,7 +35,10 @@ export const RenderCompositions: React.FC<RenderCompositionsProps> = ({
 }) => {
   const [items, setItems] = useState(appendStatusAndProgress(compositions));
   const [searchTerm, setSearchTerm] = useState("");
-  const [isRendering, setIsRendering] = useState(false);
+
+  const { mutate: renderComp, isLoading } = useMutation(
+    renderCompositionToLottieJSONPayload
+  );
 
   const filteredItems = useMemo(
     () =>
@@ -40,16 +51,14 @@ export const RenderCompositions: React.FC<RenderCompositionsProps> = ({
   const { checkedItems, activeFilteredItems, allFilteredChecked } = useMemo(
     () => ({
       checkedItems: items.filter(
-        (item) => item.checked && item.status !== "completed"
+        (item) => item.checked && !item.rendering && !item.lottieJSON
       ),
       activeFilteredItems: filteredItems.filter(
-        (item) => item.status !== "completed"
+        (item) => !item.rendering && !item.lottieJSON
       ),
       allFilteredChecked:
         filteredItems.length > 0 &&
-        filteredItems.every(
-          (item) => item.checked || item.status === "completed"
-        ),
+        filteredItems.every((item) => item.checked || !!item.lottieJSON),
     }),
     [items, filteredItems]
   );
@@ -59,7 +68,8 @@ export const RenderCompositions: React.FC<RenderCompositionsProps> = ({
       setItems((prevItems) =>
         prevItems.map((item) =>
           filteredItems.some((filteredItem) => filteredItem.id === item.id) &&
-          item.status !== "completed"
+          !item.rendering &&
+          !item.lottieJSON
             ? { ...item, checked }
             : item
         )
@@ -71,7 +81,7 @@ export const RenderCompositions: React.FC<RenderCompositionsProps> = ({
   const toggleItem = useCallback((id: number) => {
     setItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === id && item.status !== "completed"
+        item.id === id && !item.rendering && !item.lottieJSON
           ? { ...item, checked: !item.checked }
           : item
       )
@@ -79,36 +89,36 @@ export const RenderCompositions: React.FC<RenderCompositionsProps> = ({
   }, []);
 
   const updateItemProgress = useCallback(
-    (id: number, progress: RenderProgress) => {
+    (id: number, rendering: boolean, lottieJSON: LottieAnimation | null) => {
       setItems((prevItems) =>
         prevItems.map((item) =>
-          item.id === id ? { ...item, ...progress } : item
+          item.id === id ? { ...item, rendering, lottieJSON } : item
         )
       );
     },
     []
   );
+
   const renderSingleItem = useCallback(
-    async (id: number) => {
-      setIsRendering(true);
-      updateItemProgress(id, { status: "rendering", progress: 0 });
-      await renderItem(id, (progress) => {
-        updateItemProgress(id, {
-          progress,
-          status: progress === 100 ? "completed" : "rendering",
-        });
+    async (item: Composition) => {
+      updateItemProgress(item.id, true, null);
+      await renderComp(item, {
+        onSuccess: (data) => {
+          updateItemProgress(item.id, false, data);
+        },
+        onError: (error, variables, context) => {
+          alert(`Error rendering composition: ${variables.name}`);
+          updateItemProgress(item.id, false, null);
+        },
       });
-      setIsRendering(false);
     },
     [updateItemProgress]
   );
 
   const bulkRender = useCallback(async () => {
-    setIsRendering(true);
     for (const item of checkedItems) {
-      await renderSingleItem(item.id);
+      await renderSingleItem(item);
     }
-    setIsRendering(false);
   }, [checkedItems, renderSingleItem]);
 
   return (
@@ -127,11 +137,10 @@ export const RenderCompositions: React.FC<RenderCompositionsProps> = ({
         items={filteredItems}
         onToggle={toggleItem}
         onRender={renderSingleItem}
-        isRendering={isRendering}
       />
       <ControlPanel
         selectedCount={checkedItems.length}
-        isRendering={isRendering}
+        isRendering={isLoading}
         onRender={bulkRender}
       />
     </div>

@@ -65,11 +65,6 @@ export const getReadableTextColor = (backgroundColor: string): string => {
   return whiteContrast > blackContrast ? "text-white" : "text-black";
 };
 
-export type RenderProgress = {
-  progress: number;
-  status: "idle" | "rendering" | "completed";
-};
-
 /**
  * Simulate a render process
  * @param id - The id of the item to render

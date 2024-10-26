@@ -1,3 +1,5 @@
+import { LottieAnimation } from "../jsx/global";
+
 /**
  * Extracts the type of an item in an array.
  * @template T The type of the array
@@ -11,6 +13,6 @@ export type Composition = {
 
 export type CompositionRenderItem = Composition & {
   checked: boolean;
-  status: "idle" | "rendering" | "completed";
-  progress: number;
+  rendering: boolean;
+  lottieJSON: LottieAnimation | null;
 };

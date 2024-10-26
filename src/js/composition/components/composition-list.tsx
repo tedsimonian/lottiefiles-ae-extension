@@ -1,20 +1,18 @@
 import React from "react";
 
 import { CompositionItem } from "../components/composition-item";
-import { CompositionRenderItem } from "../../types";
+import { Composition, CompositionRenderItem } from "../../types";
 
 type CompositionListProps = {
   items: CompositionRenderItem[];
   onToggle: (id: number) => void;
-  onRender: (id: number) => void;
-  isRendering: boolean;
+  onRender: (item: Composition) => void;
 };
 
 export const CompositionList: React.FC<CompositionListProps> = ({
   items,
   onToggle,
   onRender,
-  isRendering,
 }: CompositionListProps) => {
   return (
     <div className="flex-grow overflow-auto">
@@ -24,7 +22,6 @@ export const CompositionList: React.FC<CompositionListProps> = ({
           item={item}
           onToggle={onToggle}
           onRender={onRender}
-          isRendering={isRendering}
         />
       ))}
     </div>
