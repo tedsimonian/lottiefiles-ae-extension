@@ -1,3 +1,4 @@
+// We use the gql function from generated as it is typed
 import { gql } from "../__generated__";
 
 export const FEATURED_PUBLIC_ANIMATIONS = gql(`

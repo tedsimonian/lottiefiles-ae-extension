@@ -22,6 +22,7 @@ export const RenderCompositions: React.FC<{
   const [items, setItems] = useState(compositions);
   const [searchTerm, setSearchTerm] = useState("");
 
+  // Filter the items based on the search term
   const filteredItems = useMemo(
     () =>
       items.filter((item) =>
@@ -30,26 +31,45 @@ export const RenderCompositions: React.FC<{
     [items, searchTerm]
   );
 
-  const { checkedItems, activeFilteredItems, allFilteredChecked } = useMemo<{
+  // Get the checked items, the active filtered items, and whether all the filtered items are checked
+  // This is used to determine if which items can be bulk rendered or not
+  const {
+    checkedItems,
+    activeFilteredItems,
+    allFilteredChecked,
+    filteredActiveItems,
+  } = useMemo<{
     checkedItems: ClientComposition[];
     activeFilteredItems: ClientComposition[];
     allFilteredChecked: boolean;
+    filteredActiveItems: ClientComposition[];
   }>(() => {
     const activeFiltered = filteredItems.filter((item) => !item.lottieJSON);
+    const filteredActive = filteredItems.filter((item) => !item.lottieJSON);
     return {
       checkedItems: items.filter((item) => item.checked && !item.lottieJSON),
       activeFilteredItems: activeFiltered,
       allFilteredChecked:
-        activeFiltered.length > 0 &&
-        activeFiltered.every((item) => item.checked),
+        filteredActive.length > 0 &&
+        filteredActive.every((item) => item.checked),
+      filteredActiveItems: filteredActive,
     };
   }, [items, filteredItems]);
 
-  const toggleAll = useCallback((checked: boolean) => {
-    setItems((prevItems) =>
-      prevItems.map((item) => (item.lottieJSON ? item : { ...item, checked }))
-    );
-  }, []);
+  const toggleAll = useCallback(
+    (checked: boolean) => {
+      setItems((prevItems) =>
+        prevItems.map((item) =>
+          filteredActiveItems.some(
+            (filteredItem) => filteredItem.id === item.id
+          )
+            ? { ...item, checked }
+            : item
+        )
+      );
+    },
+    [filteredActiveItems]
+  );
 
   const toggleItem = useCallback((id: number) => {
     setItems((prevItems) =>
@@ -61,8 +81,13 @@ export const RenderCompositions: React.FC<{
     );
   }, []);
 
+  /**
+   * A callback function that is used in the useRenderQueue hook.
+   * It renders a single composition to Lottie JSON payload.
+   */
   const onQueueItemRender = async (item: ClientComposition) => {
     try {
+      // I don't use react query here, because the loading state is handled in the useRenderQueue hook
       const data = await renderCompositionToLottieJSONPayload(item);
       // Update the item with the Lottie JSON payload
       setItems((prevItems) =>
@@ -75,8 +100,7 @@ export const RenderCompositions: React.FC<{
     }
   };
 
-  const { addToQueue, queue, isProcessing, processedItems } =
-    useRenderQueue(onQueueItemRender);
+  const { addToQueue, queue, isProcessing } = useRenderQueue(onQueueItemRender);
 
   const singleRender = (item: ClientComposition) => {
     if (!item.lottieJSON) {

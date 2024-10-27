@@ -21,11 +21,13 @@ export const FeaturedAnimations: React.FC = () => {
       variables: {
         first: QUERY_FETCH_LIMIT,
       },
+      // Check the cache first, then fetch from the network and compare the results
       fetchPolicy: "cache-and-network",
     }
   );
 
   const loadMore = () => {
+    // Prevent unnecessary API calls if there's no next page or already loading
     if (!hasNextPage || isLoadingMore) return;
 
     setIsLoadingMore(true);
@@ -36,6 +38,7 @@ export const FeaturedAnimations: React.FC = () => {
         after: data?.featuredPublicAnimations?.pageInfo?.endCursor,
       },
       updateQuery: (prevResult, { fetchMoreResult }) => {
+        // If no new data, return previous result
         if (!fetchMoreResult || !fetchMoreResult.featuredPublicAnimations)
           return prevResult;
 
@@ -45,8 +48,13 @@ export const FeaturedAnimations: React.FC = () => {
           totalCount,
         } = fetchMoreResult.featuredPublicAnimations;
 
+        // Update hasNextPage state based on new pageInfo
         setHasNextPage(pageInfo?.hasNextPage ?? false);
 
+        // Merge process:
+        // 1. Spread existing edges to maintain their order
+        // 2. Append new edges to the end of the array
+        // 3. This creates a seamless pagination effect
         return {
           featuredPublicAnimations: {
             __typename: prevResult.featuredPublicAnimations.__typename,
@@ -61,6 +69,7 @@ export const FeaturedAnimations: React.FC = () => {
         };
       },
     }).finally(() => {
+      // Reset loading state regardless of success or failure
       setIsLoadingMore(false);
     });
   };

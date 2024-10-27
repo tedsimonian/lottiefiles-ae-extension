@@ -4,6 +4,63 @@ declare var JSON: {
   parse(string: string): object;
 };
 
+export enum LottieLayerType {
+  SHAPE = 4,
+  TEXT = 5,
+  IMAGE = 2,
+}
+
+export enum LottieAnimationType {
+  STATIC = 0,
+  ANIMATED = 1,
+}
+
+export enum LottieShapeType {
+  RECTANGLE = "rc",
+  ELLIPSE = "el",
+  FILL = "fl",
+  STROKE = "st",
+  GROUP = "gr",
+  PATH = "sh",
+  TRANSFORM = "tr",
+}
+
+export enum LottieAutoOrient {
+  NO = 0,
+  YES = 1,
+}
+
+export enum Lottie3DLayer {
+  NO = 0,
+  YES = 1,
+}
+
+export enum AdobeProperty {
+  CONTENTS = "Contents",
+  RECTANGLE = "ADBE Vector Shape - Rect",
+  ELLIPSE = "ADBE Vector Shape - Ellipse",
+  FILL = "ADBE Vector Graphic - Fill",
+  STROKE = "ADBE Vector Graphic - Stroke",
+  GROUP = "ADBE Vector Shape - Group",
+  TRANSFORM = "ADBE Vector Transform Group",
+  VECTOR_GROUP = "ADBE Vector Shape",
+  PATH = "Path",
+  POSITION = "Position",
+  SIZE = "Size",
+  ROUNDNESS = "Roundness",
+  OPACITY = "Opacity",
+  COLOR = "Color",
+  LINE_CAP = "Line Cap",
+  LINE_JOIN = "Line Join",
+  STROKE_WIDTH = "Stroke Width",
+  ANCHOR_POINT = "Anchor Point",
+  ROTATION = "Rotation",
+  SCALE = "Scale",
+}
+
+/**
+ * Type for a composition on Adobe After Effects side
+ */
 export type Composition = {
   id: number;
   name: string;

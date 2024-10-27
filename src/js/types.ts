@@ -6,6 +6,9 @@ import { LottieAnimation } from "../jsx/global";
  */
 export type ArrayItem<T> = T extends (infer U)[] ? U : never;
 
+/**
+ * A composition object for the client.
+ */
 export type ClientComposition = {
   id: number;
   name: string;

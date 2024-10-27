@@ -34,8 +34,10 @@ export const LottieCard: React.FC<LottieCardProps> = ({ animation }) => {
     setDotLottie(dotLottie);
   };
 
+  // Copy the Lottie JSON to the clipboard
   const handleClipboardCopy = () => {
     if (animation.node.jsonUrl) {
+      // Because it is url, we need to fetch the data to copy it
       fetch(animation.node.jsonUrl)
         .then((response) => response.json())
         .then((data) => {

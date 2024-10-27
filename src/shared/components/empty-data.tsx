@@ -9,6 +9,9 @@ type EmptyDataProps = {
   borderColor?: string;
 };
 
+/**
+ * Component to display when there is no data available
+ */
 export const EmptyData: React.FC<EmptyDataProps> = ({
   message = "No data available",
   icon,

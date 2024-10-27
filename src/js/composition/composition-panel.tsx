@@ -10,6 +10,7 @@ import { ClientComposition } from "../types";
 
 const getAllCompositionsInProject = async (): Promise<ClientComposition[]> => {
   const compositions = await evalTS("getAllCompositionsInProject");
+  // We need to map the compositions to the client type, and add a checked and lottieJSON property
   return compositions.map((comp) => ({
     ...comp,
     checked: false,
@@ -18,6 +19,7 @@ const getAllCompositionsInProject = async (): Promise<ClientComposition[]> => {
 };
 
 export const CompositionPanel: React.FC = () => {
+  // I use react query to fetch the compositions, so we can handle loading states better
   const { data, isLoading } = useQuery(
     "compositions",
     getAllCompositionsInProject
