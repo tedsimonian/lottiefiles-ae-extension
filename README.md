@@ -1,53 +1,89 @@
-# Bolt CEP
+# Overview
 
 This project was bootstrapped with [Bolt CEP](https://github.com/hyperbrew/bolt-cep).
 
-A lightning-fast boilerplate for building Adobe CEP Extensions in React, Vue, or Svelte built on Vite + TypeScript + Sass
+This goal of this project is to create a simple extension for Adobe After Effects that allows you to do two things:
 
-![npm](https://img.shields.io/npm/v/bolt-cep)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/hyperbrew/bolt-cep/blob/master/LICENSE)
-[![Chat](https://img.shields.io/badge/chat-discord-7289da.svg)](https://discord.gg/PC3EvvuRbc)
+1. Get a list of featured Lottie animations
+2. List all compositions in the current project and allow you to render them into a Lottie JSON file
+
+Each goal is implemented in a separate panel. The `main` panel is the main panel that displays the featured animations. The `composition` panel is the panel that allows you to render compositions into a Lottie JSON file.
 
 ## Getting Started
 
-`yarn create bolt-cep`
+1. Install dependencies `npm install`
+2. Generate GraphQL types `npm run codegen`
+3. Run the project in dev mode `npm run dev`
+4. To test the composition panel:
+   1. Open Adobe After Effects
+   2. Open a project with compositions, or create a new one
+   3. Navigate to `Window > Extensions > Composition`
+   4. Use the controls to render the composition
 
-- Create Extension
+## Notes
 
-`cd myApp`
+- The main panel that displays the featured animations runs into a memory out of bounds error after fetching past 40+ Lottie Animations from the GrapqhQL endpoint of `featuredPublicAnimations`.
+  - I have tried fix this issue, but I have come to the conclusion that it is an issue with the GraphQL endpoint and not the extension.
+- This project completes the bonus challenge of creating a simple render function to covert a composition into a lottie file.
+  - The render function is implemented in `src/js/composition/aeft/aeft.ts`
+  - The render function just passes a lottie json object
+  - This component is very fast because it only handles simple compositions, so I added in a setTimeout to simulate a longer rendering times.
+- The extension is not signed so you may need to disable extension security in Adobe After Effects to test it.
+  - Both Windows and MacOS have different methods to disable this.
 
-- CD into Directory
+## Scripts
 
-`yarn`
-
-- Installs all dependencies
-
-`yarn build`
+`npm run build`
 
 - Runs initial build
 - Creates cep folder structure
 - Creates symlink to extensions folder
 
-`yarn dev`
+`npm run dev`
 
 - Runs in dev mode with HMR Hot-reloading.
 - Both JS and ExtendScript folders re-build on changes
-- Viewable in browser via localhost:3000/panel/
-  - (e.g. http://localhost:3000/main/, http://localhost:3000/settings/, etc. (see [Panel Structure](#cep-panel-structure) to set up multiple panels)))
+- Viewable in browser via localhost:3000/{panel-name}/
+  - see [Panel Structure](#cep-panel-structure) to set up multiple panels
 
-`yarn serve`
+`npm run serve`
 
-- Serve files after running `yarn build`
-- Viewable in browser via localhost:5000/panel/
-  - (e.g. http://localhost:5000/main/, http://localhost:5000/settings/, etc. (see [Panel Structure](#cep-panel-structure) to set up multiple panels)))
+- Serve files after running `npm run build`
+- Viewable in browser via localhost:5000/{panel-name}/
+  - see [Panel Structure](#cep-panel-structure) to set up multiple panels
 
-`yarn zxp`
+`npm run test`
+
+- Runs the test suite
+
+`npm run zxp`
 
 - Builds and bundles your project into a zxp for publishing in the `dist/zxp` folder
 
-`yarn zip`
+`npm run zip`
 
 - Bundles your zxp and specified assets to a zip archive in the `dist/zip` folder
+
+`npm run watch`
+
+- Runs in watch mode with HMR Hot-reloading.
+- Both JS and ExtendScript folders re-build on changes
+
+`npm run symlink`
+
+- Creates a symlink to the extensions folder
+
+`npm run delsymlink`
+
+- Deletes the symlink to the extensions folder
+
+`npm run codegen`
+
+- Generates TypeScript types from GraphQL queries
+
+`npm run watch-codegen`
+
+- Watches for changes and generates TypeScript types from GraphQL queries
 
 ---
 
@@ -55,7 +91,7 @@ A lightning-fast boilerplate for building Adobe CEP Extensions in React, Vue, or
 
 Update your CEP build and package settings in `cep.config.ts` safely typed
 
-Start building your app in `src/js/main/index(.tsx or .vue or .svelte)`
+Start building your app in `src/js/main/index.tsx`
 
 Write ExtendScript code in `src/jsx/main.ts`
 
@@ -63,7 +99,7 @@ Write ExtendScript code in `src/jsx/main.ts`
 
 ## CEP Panel Structure
 
-Each panel is treated as it's own page, with shared code for efficiency. The Boilerplate currently comes with 2 panels, `main` and `settings`. These are configured in the `cep.config.ts`.
+Each panel is treated as it's own page, with shared code for efficiency. The project currently comes with 2 panels, `main` and `composition`. These are configured in the `cep.config.ts`.
 
 Each panel can be edited in their respective folders:
 
@@ -73,7 +109,7 @@ src
     ├─ main
     │   ├─ index.html
     |   └─ index.tsx
-    └─ settings
+    └─ composition
         ├─ index.html
         └─ index.tsx
 ```
@@ -391,13 +427,3 @@ If you're experiencing issues building on your Apple Silicon Machine regarding t
   - Ensure a universal binary version of Node.js is installed (available on [nodejs.org](https://nodejs.org/en/download))
   - Run your terminal in Rosetta mode, or additionally install the Intel build of VS Code.
   - Delete and re-install your node_modules folder if you've already built it.
-
-**Update a Bolt CEP Project** To update an existing Bolt CEP project to the the latest version, create a new Bolt CEP project with the same framework (React, Vue, Svelte), then compare and update the following files:
-
-1. `package.json` - Update all dependencies and scripts ( `vite-cep-plugin` - usually contains the most frequent updates )
-2. `vite.config.ts` - Unless you've modified the vite config yourself, you can just copy the contents of the latest into yours.
-3. `vite.es.config.ts` - Like the previous config, unless you've modified it yourself, you can just copy the contents of the latest into yours.
-4. `cep.config.ts` - Check if any new properties have been added that don't exist in your config.
-5. `src/js/lib` - Update this entire folder.
-6. `src/jsx/index.ts` - Check if any new properties have been added that don't exist in your config.
-7. `src/shared/universals.d.ts` - Check if any new properties have been added that don't exist in your config.
