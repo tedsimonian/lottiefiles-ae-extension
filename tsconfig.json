@@ -19,6 +19,6 @@
       "@esTypes/*": ["./src/jsx"]
     }
   },
-  "include": ["./src"],
+  "include": ["./src", "src/**/__tests__/**/*"],
   "exclude": ["./src/jsx"]
 }
