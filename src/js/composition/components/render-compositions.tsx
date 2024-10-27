@@ -39,10 +39,10 @@ export const RenderCompositions: React.FC<{
     allFilteredChecked,
     filteredActiveItems,
   } = useMemo<{
-    checkedItems: ClientComposition[];
-    activeFilteredItems: ClientComposition[];
-    allFilteredChecked: boolean;
-    filteredActiveItems: ClientComposition[];
+    checkedItems: ClientComposition[]; // All checked items that haven't been rendered to Lottie JSON yet
+    activeFilteredItems: ClientComposition[]; // Filtered items that haven't been rendered to Lottie JSON yet
+    allFilteredChecked: boolean; // Whether all filtered active items are checked
+    filteredActiveItems: ClientComposition[]; // Filtered items that haven't been rendered to Lottie JSON yet (same as activeFilteredItems)
   }>(() => {
     const activeFiltered = filteredItems.filter((item) => !item.lottieJSON);
     const filteredActive = filteredItems.filter((item) => !item.lottieJSON);
