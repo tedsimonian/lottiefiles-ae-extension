@@ -1,27 +1,33 @@
 import React, { useState } from "react";
-import { Loader2, Copy, Download } from "lucide-react";
+import { Loader2, Copy, Play, Check } from "lucide-react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 import { Checkbox } from "../../../shared/components/ui/checkbox";
 import { Button } from "../../../shared/components/ui/button";
 
-import { Composition, CompositionRenderItem } from "../../types";
+import { ClientComposition } from "../../types";
 import { cn } from "../../../shared/utils";
+import { RenderQueueItem } from "../useRenderQueue";
 
 type CompositionItemProps = {
-  item: CompositionRenderItem;
+  item: ClientComposition;
+  queueStatus?: RenderQueueItem["status"];
   onToggle: (id: number) => void;
-  onRender: (item: Composition) => void;
+  onRender: (item: ClientComposition) => void;
 };
 
 export const CompositionItem: React.FC<CompositionItemProps> = ({
   item,
+  queueStatus,
   onToggle,
   onRender,
 }: CompositionItemProps) => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
   const [copyButtonText, setCopyButtonText] = useState("Copy JSON");
-  const isDisabled = item.rendering || !!item.lottieJSON;
+
+  const isRendering = queueStatus === "processing";
+  const isRendered = !!item.lottieJSON;
+  const isDisabled = queueStatus === "pending" || isRendering || isRendered;
 
   const handleCopyJSON = () => {
     if (item.lottieJSON) {
@@ -45,18 +51,31 @@ export const CompositionItem: React.FC<CompositionItemProps> = ({
           <label
             htmlFor={`item-${item.id}`}
             className={cn(
-              "ml-2 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
-              isDisabled ? "line-through text-muted-foreground" : ""
+              "ml-2 text-sm font-medium leading-none",
+              isDisabled ? "opacity-50" : "",
+              isRendered ? "line-through" : ""
             )}
           >
             {item.name}
           </label>
         </div>
         <div className="flex items-center space-x-2">
-          {item.rendering && (
-            <Loader2 className="h-4 w-4 animate-spin text-teal-500" />
+          {!isRendered && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onRender(item)}
+              disabled={isDisabled}
+              className="text-white border-teal-500 bg-teal-500 hover:bg-teal-700 hover:border-teal-700 hover:text-white disabled:opacity-50"
+            >
+              {isRendering ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Play className="h-4 w-4" />
+              )}
+            </Button>
           )}
-          {item.lottieJSON && (
+          {isRendered && (
             <Button
               variant="outline"
               size="sm"
@@ -68,15 +87,17 @@ export const CompositionItem: React.FC<CompositionItemProps> = ({
           )}
         </div>
       </div>
-      {item.lottieJSON && isAccordionOpen && (
+      {isRendered && isAccordionOpen && (
         <div className="mt-4 space-y-4 my-4">
           <div className="w-full h-64 bg-gray-800 rounded-md overflow-hidden">
-            <DotLottieReact
-              data={item.lottieJSON}
-              autoplay
-              loop
-              style={{ width: "100%", height: "100%" }}
-            />
+            {item.lottieJSON && (
+              <DotLottieReact
+                data={item.lottieJSON}
+                autoplay
+                loop
+                style={{ width: "100%", height: "100%" }}
+              />
+            )}
           </div>
           <div className="flex justify-end space-x-2">
             <Button

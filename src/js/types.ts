@@ -6,13 +6,9 @@ import { LottieAnimation } from "../jsx/global";
  */
 export type ArrayItem<T> = T extends (infer U)[] ? U : never;
 
-export type Composition = {
+export type ClientComposition = {
   id: number;
   name: string;
-};
-
-export type CompositionRenderItem = Composition & {
   checked: boolean;
-  rendering: boolean;
   lottieJSON: LottieAnimation | null;
 };

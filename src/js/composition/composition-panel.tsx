@@ -1,15 +1,20 @@
 import React from "react";
+import { useQuery } from "react-query";
+import { Loader2 } from "lucide-react";
 
 import { RenderCompositions } from "./components/render-compositions";
 import { EmptyData } from "../../shared/components/empty-data";
 
-import { Composition } from "../types";
 import { evalTS } from "../lib/utils/bolt";
-import { useQuery } from "react-query";
-import { Loader2 } from "lucide-react";
+import { ClientComposition } from "../types";
 
-const getAllCompositionsInProject = async (): Promise<Composition[]> => {
-  return evalTS("getAllCompositionsInProject");
+const getAllCompositionsInProject = async (): Promise<ClientComposition[]> => {
+  const compositions = await evalTS("getAllCompositionsInProject");
+  return compositions.map((comp) => ({
+    ...comp,
+    checked: false,
+    lottieJSON: null,
+  }));
 };
 
 export const CompositionPanel: React.FC = () => {
