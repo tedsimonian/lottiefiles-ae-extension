@@ -26,19 +26,19 @@ export const CompositionPanel: React.FC = () => {
   );
 
   return (
-    <div className="h-screen w-full bg-gray-900 text-white p-4">
+    <div className="w-full  p-4">
       <div className="container mx-auto px-4 py-8 flex flex-col">
         <h1 className="text-3xl font-bold mb-8">Compositions to Lottie</h1>
         {isLoading && (
           <div className="flex justify-center items-center gap-2">
-            <Loader2 className="h-8 w-8 animate-spin text-white" />
+            <Loader2 className="h-8 w-8 animate-spin " />
             Loading Compositions...
           </div>
         )}
         {data && <RenderCompositions compositions={data} />}
         {!data && !isLoading && (
           <EmptyData
-            className="border-white text-white"
+            className="border-gray-800 text-gray-800"
             message="No compositions found"
           />
         )}

@@ -1,9 +1,10 @@
+import clipboard from "clipboardy";
+
 import {
   AdobeProperty,
   AnimatedValue,
   Composition,
   FillShape,
-  JSON,
   Layer,
   Lottie3DLayer,
   LottieAnimation,
@@ -39,6 +40,15 @@ const generateUUID = (): string => {
 
   return result;
 };
+
+/**
+ * Copies a string to the clipboard
+ * This is a workaround for the lack of clipboard support in After Effects
+ * @param textToCopy - The string to copy
+ */
+// export const copyToClipboard = (textToCopy: string) => {
+//   clipboard.write(textToCopy);
+// };
 
 /**
  * Get all compositions in the current project
