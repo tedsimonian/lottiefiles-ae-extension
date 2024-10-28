@@ -60,7 +60,6 @@ export default defineConfig({
   preview: {
     port: cepConfig.servePort,
   },
-
   build: {
     sourcemap: isPackage ? cepConfig.zxp.sourceMap : cepConfig.build?.sourceMap,
     watch: {

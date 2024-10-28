@@ -286,7 +286,7 @@ export const convertCompositionToLottieJSONPayload = (
  * @param layer - The After Effects layer to convert
  * @returns A Lottie layer object
  */
-const convertLayerToLottie = (layer: globalThis.Layer): Layer => {
+export const convertLayerToLottie = (layer: globalThis.Layer): Layer => {
   const INDEX_OFFSET = 1; // Offset for layer index
   const DEFAULT_STRETCH = 1; // Default stretch value
 
@@ -317,7 +317,7 @@ const convertLayerToLottie = (layer: globalThis.Layer): Layer => {
  * @param layer - The After Effects layer to analyze
  * @returns The corresponding Lottie layer type as a number
  */
-const getLottieLayerType = (layer: globalThis.Layer): number => {
+export const getLottieLayerType = (layer: globalThis.Layer): number => {
   if (layer instanceof ShapeLayer) return LottieLayerType.SHAPE;
   if (layer instanceof TextLayer) return LottieLayerType.TEXT;
 
@@ -329,7 +329,7 @@ const getLottieLayerType = (layer: globalThis.Layer): number => {
  * @param layer - The After Effects layer to analyze
  * @returns The transform properties as an object
  */
-const extractTransformProperties = (
+export const extractTransformProperties = (
   layer: globalThis.Layer
 ): TransformProperties => {
   const transform = layer.transform;
@@ -347,7 +347,9 @@ const extractTransformProperties = (
  * @param property - The After Effects property to convert
  * @returns An animated value object for lottie
  */
-const convertToAnimatedValue = <T>(property: Property): AnimatedValue<T> => {
+export const convertToAnimatedValue = <T>(
+  property: Property
+): AnimatedValue<T> => {
   const INITIAL_TIME = 0;
 
   if (property.isTimeVarying) {
@@ -370,7 +372,7 @@ const convertToAnimatedValue = <T>(property: Property): AnimatedValue<T> => {
  * @param layer - The After Effects shape layer to analyze
  * @returns An array of shape objects
  */
-const extractShapes = (layer: ShapeLayer): Shape[] => {
+export const extractShapes = (layer: ShapeLayer): Shape[] => {
   const shapes: Shape[] = [];
   const contents = layer.property(AdobeProperty.CONTENTS) as PropertyGroup;
 
@@ -393,7 +395,7 @@ const extractShapes = (layer: ShapeLayer): Shape[] => {
  * @param shapeGroup - The After Effects shape group to analyze
  * @returns A shape object
  */
-const extractShapeGroup = (shapeGroup: PropertyGroup): Shape => {
+export const extractShapeGroup = (shapeGroup: PropertyGroup): Shape => {
   const shapeItems: Shape[] = [];
 
   const contents = shapeGroup.property(
@@ -447,7 +449,9 @@ const extractShapeGroup = (shapeGroup: PropertyGroup): Shape => {
  * @param rectProperty - The After Effects rectangle property to analyze
  * @returns A rectangle shape object
  */
-const extractRectangle = (rectProperty: PropertyGroup): RectangleShape => {
+export const extractRectangle = (
+  rectProperty: PropertyGroup
+): RectangleShape => {
   return {
     ty: LottieShapeType.RECTANGLE,
     nm: rectProperty.name,
@@ -468,7 +472,7 @@ const extractRectangle = (rectProperty: PropertyGroup): RectangleShape => {
  * @param pathProperty - The After Effects path property to analyze
  * @returns A path shape object
  */
-const extractPath = (pathProperty: Property): PathShape => {
+export const extractPath = (pathProperty: Property): PathShape => {
   return {
     ty: LottieShapeType.PATH,
     nm: pathProperty.name,
@@ -481,7 +485,7 @@ const extractPath = (pathProperty: Property): PathShape => {
  * @param fillProperty - The After Effects fill property to analyze
  * @returns A fill shape object
  */
-const extractFill = (fillProperty: PropertyGroup): FillShape => {
+export const extractFill = (fillProperty: PropertyGroup): FillShape => {
   return {
     ty: LottieShapeType.FILL,
     nm: fillProperty.name,
@@ -499,7 +503,7 @@ const extractFill = (fillProperty: PropertyGroup): FillShape => {
  * @param strokeProperty - The After Effects stroke property to analyze
  * @returns A stroke shape object
  */
-const extractStroke = (strokeProperty: PropertyGroup): StrokeShape => {
+export const extractStroke = (strokeProperty: PropertyGroup): StrokeShape => {
   return {
     ty: LottieShapeType.STROKE,
     nm: strokeProperty.name,
@@ -522,7 +526,9 @@ const extractStroke = (strokeProperty: PropertyGroup): StrokeShape => {
  * @param transformProperty - The After Effects transform property to analyze
  * @returns A transform shape object
  */
-const extractTransform = (transformProperty: PropertyGroup): TransformShape => {
+export const extractTransform = (
+  transformProperty: PropertyGroup
+): TransformShape => {
   return {
     ty: LottieShapeType.TRANSFORM,
     p: convertToAnimatedValue(

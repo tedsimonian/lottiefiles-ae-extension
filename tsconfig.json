@@ -17,8 +17,16 @@
     "jsx": "react-jsx",
     "paths": {
       "@esTypes/*": ["./src/jsx"]
-    }
+    },
+    "types": ["vite/client", "jest", "@types/react"]
   },
-  "include": ["./src"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/__tests__/**/*.ts",
+    "src/__tests__/**/*.tsx",
+    "jest.setup.ts"
+  ],
   "exclude": ["./src/jsx"]
 }

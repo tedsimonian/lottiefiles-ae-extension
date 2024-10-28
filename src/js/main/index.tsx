@@ -13,12 +13,20 @@ import "../global.css";
 
 initBolt();
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
+export const Main = () => {
+  return (
     <ApolloProvider client={apolloClient}>
       <QueryClientProvider client={queryClient}>
         <MainPanel />
       </QueryClientProvider>
     </ApolloProvider>
+  );
+};
+
+export default Main;
+
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+  <React.StrictMode>
+    <Main />
   </React.StrictMode>
 );
