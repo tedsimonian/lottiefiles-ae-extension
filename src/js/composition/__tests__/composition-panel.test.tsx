@@ -30,3 +30,6 @@ describe("CompositionPanel", () => {
     expect(screen.getByText("No compositions found")).toBeInTheDocument();
   });
 });
+
+// Add empty export to make this a module
+export {};
