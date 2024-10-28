@@ -1,25 +1,12 @@
-/**
- * The copy to clipboard functionality is not supported in Adobe CEP, so I have removed it for now.
- * It will require further investigation, but for now, I have disabled it as it is not a required feature.
- * The copyToClipboard function does work in the browser, but not in Adobe CEP.
- *
- * You can uncomment the lines and run it in the browser to see it copy the json
- */
-
 import React, { useState } from "react";
-import {
-  Loader2,
-  // Copy,
-  Play,
-  // Check
-} from "lucide-react";
+import { Loader2, Copy, Play, Check } from "lucide-react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 import { Checkbox } from "../../../shared/components/ui/checkbox";
 import { Button } from "../../../shared/components/ui/button";
 
 import { ClientComposition } from "../../types";
-import { cn } from "../../../shared/utils";
+import { cn, copyToClipboard } from "../../../shared/utils";
 import { RenderQueueItem } from "../useRenderQueue";
 
 type CompositionItemProps = {
@@ -36,19 +23,23 @@ export const CompositionItem: React.FC<CompositionItemProps> = ({
   onRender,
 }: CompositionItemProps) => {
   const [isAccordionOpen, setIsAccordionOpen] = useState(false);
-  // const [copyButtonText, setCopyButtonText] = useState("Copy JSON");
+  const [copyButtonText, setCopyButtonText] = useState("Copy JSON");
 
   const isRendering = queueStatus === "processing";
   const isRendered = !!item.lottieJSON;
   const isDisabled = queueStatus === "pending" || isRendering || isRendered;
 
-  // const handleCopyJSON = () => {
-  //   if (item.lottieJSON) {
-  //     navigator.clipboard.writeText(JSON.stringify(item.lottieJSON, null, 2));
-  //     setCopyButtonText("Copied!");
-  //     setTimeout(() => setCopyButtonText("Copy JSON"), 2000);
-  //   }
-  // };
+  /**
+   * The Clipboard API functionality is not supported in Adobe CEP, we are using a deprecated method to copy the JSON to the clipboard.
+   * It will require further investigation, as to why the clipboard API does not work in Adobe CEP.
+   */
+  const handleCopyJSON = () => {
+    if (item.lottieJSON) {
+      copyToClipboard(JSON.stringify(item.lottieJSON, null, 2));
+      setCopyButtonText("Copied!");
+      setTimeout(() => setCopyButtonText("Copy JSON"), 2000);
+    }
+  };
 
   return (
     <div className="w-full h-full border-b border-gray-700">
@@ -102,7 +93,7 @@ export const CompositionItem: React.FC<CompositionItemProps> = ({
       </div>
       {isRendered && isAccordionOpen && (
         <div className="mt-4 space-y-4 my-4">
-          <div className="w-full h-64 bg-gray-300 shadow-md rounded-md overflow-hidden">
+          <div className="w-full h-64 bg-gray-300 shadow-md rounded-md text-black overflow-hidden">
             {item.lottieJSON && (
               <DotLottieReact
                 data={item.lottieJSON}
@@ -112,7 +103,7 @@ export const CompositionItem: React.FC<CompositionItemProps> = ({
               />
             )}
           </div>
-          {/* <div className="flex justify-end space-x-2">
+          <div className="flex justify-end space-x-2">
             <Button
               variant="outline"
               size="sm"
@@ -122,7 +113,7 @@ export const CompositionItem: React.FC<CompositionItemProps> = ({
               <Copy className="h-4 w-4 mr-2" />
               {copyButtonText}
             </Button>
-          </div> */}
+          </div>
         </div>
       )}
     </div>

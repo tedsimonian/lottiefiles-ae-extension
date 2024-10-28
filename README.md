@@ -11,10 +11,11 @@ Each goal is implemented in a separate panel. The `main` panel is the main panel
 
 ## Getting Started
 
-1. Install dependencies `npm install`
-2. Generate GraphQL types `npm run codegen`
-3. Run the project in dev mode `npm run dev`
-4. To test the composition panel:
+1. Install dependencies `yarn`
+2. Build the project `yarn build` **IMPORTANT** This must be run before running the project in dev mode, otherwise it won't be able to run
+3. Generate GraphQL types `yarn run codegen`
+4. Run the project in dev mode `yarn run dev`
+5. To test the composition panel:
    1. Open Adobe After Effects
    2. Open a project with compositions, or create a new one
    3. Navigate to `Window > Extensions > Composition`

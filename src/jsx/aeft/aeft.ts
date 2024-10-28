@@ -1,5 +1,3 @@
-// import clipboard from "clipboardy";
-
 export enum LottieLayerType {
   SHAPE = 4,
   TEXT = 5,
@@ -39,7 +37,7 @@ export enum AdobeProperty {
   STROKE = "ADBE Vector Graphic - Stroke",
   GROUP = "ADBE Vector Shape - Group",
   TRANSFORM = "ADBE Vector Transform Group",
-  VECTOR_GROUP = "ADBE Vector Shape",
+  VECTOR_GROUP = "ADBE Vectors Group",
   PATH = "Path",
   POSITION = "Position",
   SIZE = "Size",
@@ -190,7 +188,7 @@ export type TransformShape = {
   sa?: AnimatedValue<number>; // Skew axis (optional)
 };
 
-export type Meta = {
+type Meta = {
   g: string; // Generator name
   a?: string; // Author (optional)
   k?: string; // Keywords (optional)
@@ -218,15 +216,6 @@ export const generateUUID = (): string => {
 
   return result;
 };
-
-/**
- * Copies a string to the clipboard
- * This is a workaround for the lack of clipboard support in After Effects
- * @param textToCopy - The string to copy
- */
-// export const copyToClipboard = (textToCopy: string) => {
-//   clipboard.write(textToCopy);
-// };
 
 /**
  * Get all compositions in the current project

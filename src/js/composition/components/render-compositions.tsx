@@ -134,6 +134,7 @@ export const RenderCompositions: React.FC<{
         isRendering={isProcessing}
         onRender={bulkRender}
       />
+      {}
     </div>
   );
 };

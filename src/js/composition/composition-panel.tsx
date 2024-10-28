@@ -25,6 +25,8 @@ export const CompositionPanel: React.FC = () => {
     getAllCompositionsInProject
   );
 
+  const isEmpty = (!data || data.length === 0) && !isLoading;
+
   return (
     <div className="w-full  p-4">
       <div className="container mx-auto px-4 py-8 flex flex-col">
@@ -35,8 +37,8 @@ export const CompositionPanel: React.FC = () => {
             Loading Compositions...
           </div>
         )}
-        {data && <RenderCompositions compositions={data} />}
-        {!data && !isLoading && (
+        {!isEmpty && data && <RenderCompositions compositions={data} />}
+        {isEmpty && (
           <EmptyData
             className="border-gray-800 text-gray-800"
             message="No compositions found"

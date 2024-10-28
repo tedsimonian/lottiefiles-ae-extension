@@ -1,19 +1,7 @@
-/**
- * The CLipboard API is not supported in Adobe CEP, so I tried using system level copy, but it isn't working correctly.
- * It will require further investigation, but for now, I have disabled it as it is not a required feature.
- * The copyToClipboard function does work in the browser, but not in Adobe CEP.
- */
-
 import { useState } from "react";
 import { DotLottie, DotLottieReact } from "@lottiefiles/dotlottie-react";
-import {
-  // Check,
-  // Copy,
-  Download,
-  Heart,
-  Loader2,
-} from "lucide-react";
-// import { useQuery } from "react-query";
+import { Check, Copy, Download, Heart, Loader2 } from "lucide-react";
+import { useQuery } from "react-query";
 
 import {
   Card,
@@ -30,10 +18,12 @@ import {
 
 import { FeaturedPublicAnimationsQuery } from "../../lib/__generated__/graphql";
 import { ArrayItem } from "../../types";
-import { cn, getReadableTextColor } from "../../../shared/utils";
-// import { Button } from "../../../shared/components/ui/button";
-// import CSInterface from "../../lib/cep/csinterface";
-// import { evalTS } from "../../lib/utils/bolt";
+import {
+  cn,
+  copyToClipboard,
+  getReadableTextColor,
+} from "../../../shared/utils";
+import { Button } from "../../../shared/components/ui/button";
 
 type LottieCardProps = {
   animation: ArrayItem<
@@ -41,43 +31,38 @@ type LottieCardProps = {
   >;
 };
 
-// const fetchLottieJson = async (url: string) => {
-//   const response = await fetch(url);
-//   if (!response.ok) {
-//     throw new Error("Failed to fetch Lottie JSON");
-//   }
-//   return response.json();
-// };
+const fetchLottieJson = async (url: string) => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error("Failed to fetch Lottie JSON");
+  }
+  return response.json();
+};
 
 export const LottieCard: React.FC<LottieCardProps> = ({ animation }) => {
   const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
   const [isCopied, setIsCopied] = useState(false);
 
-  // const { data: lottieJson } = useQuery({
-  //   queryKey: ["lottieJson", animation.node.jsonUrl],
-  //   queryFn: () => fetchLottieJson(animation.node.jsonUrl ?? ""),
-  //   enabled: !!animation.node.jsonUrl, // don't fetch if no url is available
-  //   cacheTime: 1000 * 60 * 60, // Cache for 1 hour
-  // });
+  const { data: lottieJson } = useQuery({
+    queryKey: ["lottieJson", animation.node.jsonUrl],
+    queryFn: () => fetchLottieJson(animation.node.jsonUrl ?? ""),
+    enabled: !!animation.node.jsonUrl, // don't fetch if no url is available
+    cacheTime: 1000 * 60 * 60, // Cache for 1 hour
+  });
 
   const dotLottieRefCallback = (dotLottie: DotLottie) => {
     setDotLottie(dotLottie);
   };
 
-  // const handleClipboardCopy = async() => {
-  //   try {
-  //     const jsonString = JSON.stringify(lottieJson, null, 2);
-  //     if (typeof window !== "undefined") {
-  //       await navigator.clipboard.writeText(jsonString);
-  //     } else {
-  //       await evalTS("copyToClipboard", jsonString);
-  //     }
-
-  //     setIsCopied(true);
-  //   } finally {
-  //     setTimeout(() => setIsCopied(false), 2000);
-  //   }
-  // };
+  /**
+   * The Clipboard API functionality is not supported in Adobe CEP, we are using a deprecated method to copy the JSON to the clipboard.
+   * It will require further investigation, as to why the clipboard API does not work in Adobe CEP.
+   */
+  const handleClipboardCopy = async () => {
+    copyToClipboard(JSON.stringify(lottieJson, null, 2));
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+  };
 
   return (
     <Card
@@ -146,14 +131,13 @@ export const LottieCard: React.FC<LottieCardProps> = ({ animation }) => {
               <span className="text-sm">{animation.node.likesCount}</span>
             </div>
           </div>
-
-          {/* <Button variant="outline" size="icon" onClick={handleClipboardCopy}>
+          <Button variant="outline" size="icon" onClick={handleClipboardCopy}>
             {isCopied ? (
               <Check className="h-4 w-4" />
             ) : (
               <Copy className="h-4 w-4" />
             )}
-          </Button> */}
+          </Button>
         </div>
       </CardFooter>
     </Card>

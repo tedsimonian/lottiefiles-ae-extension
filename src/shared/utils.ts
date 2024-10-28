@@ -131,3 +131,16 @@ export const getReadableTextColor = (backgroundColor: string): string => {
   // If white has higher contrast, use white text; otherwise, use black text
   return whiteContrast > blackContrast ? "text-white" : "text-black";
 };
+
+/**
+ * Copy text to the clipboard
+ * @param text - Text to copy
+ */
+export const copyToClipboard = (text: string) => {
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  document.body.appendChild(textArea);
+  textArea.select();
+  document.execCommand("copy"); // This is a deprecated method, as the Clipboard API is not supported in Adobe CEP
+  document.body.removeChild(textArea);
+};
