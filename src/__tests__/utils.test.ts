@@ -136,12 +136,7 @@ describe("getContrastRatio", () => {
 
 describe("copyToClipboard", () => {
   beforeEach(() => {
-    // Mock execCommand
     document.execCommand = jest.fn().mockReturnValue(true);
-    // Create a temporary textarea if it doesn't exist
-    if (!document.body) {
-      document.body = document.createElement("body");
-    }
   });
 
   afterEach(() => {
