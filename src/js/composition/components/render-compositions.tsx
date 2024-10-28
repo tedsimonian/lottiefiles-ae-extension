@@ -5,9 +5,8 @@ import { CompositionList } from "./composition-list";
 import { ControlPanel } from "./control-panel";
 import { Checkbox } from "../../../shared/components/ui/checkbox";
 
-import { ClientComposition } from "../../types";
+import { ClientComposition, LottieAnimation } from "../../types";
 import { evalTS } from "../../lib/utils/bolt";
-import { LottieAnimation } from "../../../jsx/global";
 import { useRenderQueue } from "../useRenderQueue";
 
 const renderCompositionToLottieJSONPayload = async (

@@ -1,24 +1,202 @@
-import clipboard from "clipboardy";
+// import clipboard from "clipboardy";
 
-import {
-  AdobeProperty,
-  AnimatedValue,
-  Composition,
-  FillShape,
-  Layer,
-  Lottie3DLayer,
-  LottieAnimation,
-  LottieAnimationType,
-  LottieAutoOrient,
-  LottieLayerType,
-  LottieShapeType,
-  PathShape,
-  RectangleShape,
-  Shape,
-  StrokeShape,
-  TransformProperties,
-  TransformShape,
-} from "../global";
+enum LottieLayerType {
+  SHAPE = 4,
+  TEXT = 5,
+  IMAGE = 2,
+}
+
+enum LottieAnimationType {
+  STATIC = 0,
+  ANIMATED = 1,
+}
+
+enum LottieShapeType {
+  RECTANGLE = "rc",
+  ELLIPSE = "el",
+  FILL = "fl",
+  STROKE = "st",
+  GROUP = "gr",
+  PATH = "sh",
+  TRANSFORM = "tr",
+}
+
+enum LottieAutoOrient {
+  NO = 0,
+  YES = 1,
+}
+
+enum Lottie3DLayer {
+  NO = 0,
+  YES = 1,
+}
+
+enum AdobeProperty {
+  CONTENTS = "Contents",
+  RECTANGLE = "ADBE Vector Shape - Rect",
+  ELLIPSE = "ADBE Vector Shape - Ellipse",
+  FILL = "ADBE Vector Graphic - Fill",
+  STROKE = "ADBE Vector Graphic - Stroke",
+  GROUP = "ADBE Vector Shape - Group",
+  TRANSFORM = "ADBE Vector Transform Group",
+  VECTOR_GROUP = "ADBE Vector Shape",
+  PATH = "Path",
+  POSITION = "Position",
+  SIZE = "Size",
+  ROUNDNESS = "Roundness",
+  OPACITY = "Opacity",
+  COLOR = "Color",
+  LINE_CAP = "Line Cap",
+  LINE_JOIN = "Line Join",
+  STROKE_WIDTH = "Stroke Width",
+  ANCHOR_POINT = "Anchor Point",
+  ROTATION = "Rotation",
+  SCALE = "Scale",
+}
+
+/**
+ * Type for a composition on Adobe After Effects side
+ */
+type Composition = {
+  id: number;
+  name: string;
+};
+
+type LottieAnimation = {
+  v: string; // Version
+  ip: number; // In-point of the animation
+  op: number; // Out-point of the animation
+  nm: string; // Name
+  mn?: string; // Marker name, optional
+  fr: number; // Frame rate
+  w: number; // Width
+  h: number; // Height
+  assets: Asset[]; // Assets array
+  layers: Layer[]; // Layers array
+  meta?: Meta; // Metadata, optional
+};
+
+// Since I'm not using all Asset, I am not defining all the properties
+type Asset = {
+  id: string;
+};
+
+type Layer = {
+  ddd?: 0 | 1; // 3D layer (0: no, 1: yes)
+  ty: number; // Layer type
+  ind: number; // Layer index
+  st: number; // Start time
+  ip: number; // In-point of the layer
+  op: number; // Out-point of the layer
+  nm: string; // Name
+  mn?: string; // Marker name, optional
+  ks: TransformProperties; // Transform properties
+  shapes: Shape[]; // Shape array
+  sr?: number; // Stretch, optional
+  tt?: number; // Track matte type, optional
+  ao?: 0 | 1; // Auto-orient along path (0: no, 1: yes)
+};
+
+type TransformProperties = {
+  a: AnimatedValue<number[]>; // Anchor point
+  p: AnimatedValue<number[]>; // Position
+  s: AnimatedValue<number[]>; // Scale
+  r?: AnimatedValue<number>; // Rotation
+  o?: AnimatedValue<number>; // Opacity
+  sk?: AnimatedValue<number>; // Skew
+  sa?: AnimatedValue<number>; // Skew axis
+};
+
+type AnimatedValue<T> = {
+  a: 0 | 1; // Animation toggle (0: static, 1: animated)
+  k: T; // Keyframe or static value
+  ix?: number; // Index
+};
+
+// I am only using RectangleShape for now, we can define other shapes here
+type Shape =
+  | EllipseShape
+  | RectangleShape
+  | FillShape
+  | StrokeShape
+  | GroupShape
+  | PathShape
+  | TransformShape;
+
+type EllipseShape = {
+  ty: "el"; // Shape type (Ellipse)
+  nm: string; // Name
+  p: AnimatedValue<number[]>; // Position
+  s: AnimatedValue<number[]>; // Size
+  d?: 1; // Direction
+};
+
+type RectangleShape = {
+  ty: "rc"; // Shape type (Rectangle)
+  nm: string; // Name
+  p: AnimatedValue<number[]>; // Position
+  s: AnimatedValue<number[]>; // Size
+  r: AnimatedValue<number>; // Corner radius
+};
+
+type FillShape = {
+  ty: "fl"; // Shape type (Fill)
+  nm: string; // Name
+  o: AnimatedValue<number>; // Opacity
+  c: AnimatedValue<number[]>; // Color (RGBA)
+  r?: 1; // Rule (optional)
+};
+
+type StrokeShape = {
+  ty: "st"; // Shape type (Stroke)
+  nm: string; // Name
+  o: AnimatedValue<number>; // Opacity
+  w: AnimatedValue<number>; // Stroke width
+  c: AnimatedValue<number[]>; // Color (RGBA)
+  lc?: 1 | 2 | 3; // Line cap (1: butt, 2: round, 3: projecting)
+  lj?: 1 | 2 | 3; // Line join (1: miter, 2: round, 3: bevel)
+  ml?: number; // Miter limit
+  d?: Dash[]; // Dash pattern
+};
+
+type Dash = {
+  n: "o" | "d" | "g"; // Name (offset, dash, gap)
+  v: AnimatedValue<number>; // Value
+};
+
+type GroupShape = {
+  ty: "gr"; // Shape type (Group)
+  nm: string; // Name
+  it: Shape[]; // Items within the group
+  np: number; // Number of properties
+  cix?: number; // Containing index
+};
+
+type PathShape = {
+  ty: "sh"; // Shape type (Path)
+  nm: string; // Name
+  ks: AnimatedValue<number[]>; // Keyframe values
+  c?: boolean; // Closed (optional)
+};
+
+type TransformShape = {
+  ty: "tr"; // Transform type
+  a: AnimatedValue<number[]>; // Anchor point
+  p: AnimatedValue<number[]>; // Position
+  s: AnimatedValue<number[]>; // Scale
+  r: AnimatedValue<number>; // Rotation
+  o: AnimatedValue<number>; // Opacity
+  sk?: AnimatedValue<number>; // Skew (optional)
+  sa?: AnimatedValue<number>; // Skew axis (optional)
+};
+
+type Meta = {
+  g: string; // Generator name
+  a?: string; // Author (optional)
+  k?: string; // Keywords (optional)
+  d?: string; // Description (optional)
+  v?: string; // Version (optional)
+};
 
 /**
  * Generates a UUID-like string for use in After Effects.
