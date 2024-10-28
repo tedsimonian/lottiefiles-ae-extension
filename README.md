@@ -13,8 +13,8 @@ Each goal is implemented in a separate panel. The `main` panel is the main panel
 
 1. Install dependencies `yarn`
 2. Build the project `yarn build` **IMPORTANT** This must be run before running the project in dev mode, otherwise it won't be able to run
-3. Generate GraphQL types `yarn run codegen`
-4. Run the project in dev mode `yarn run dev`
+3. Generate GraphQL types `yarn codegen`
+4. Run the project in dev mode `yarn dev`
 5. To test the composition panel:
    1. Open Adobe After Effects
    2. Open a project with compositions, or create a new one
@@ -34,55 +34,55 @@ Each goal is implemented in a separate panel. The `main` panel is the main panel
 
 ## Scripts
 
-`npm run build`
+`yarn build`
 
 - Runs initial build
 - Creates cep folder structure
 - Creates symlink to extensions folder
 
-`npm run dev`
+`yarn dev`
 
 - Runs in dev mode with HMR Hot-reloading.
 - Both JS and ExtendScript folders re-build on changes
 - Viewable in browser via localhost:3000/{panel-name}/
   - see [Panel Structure](#cep-panel-structure) to set up multiple panels
 
-`npm run serve`
+`yarn serve`
 
-- Serve files after running `npm run build`
+- Serve files after running `yarn build`
 - Viewable in browser via localhost:5000/{panel-name}/
   - see [Panel Structure](#cep-panel-structure) to set up multiple panels
 
-`npm run test`
+`yarn test`
 
 - Runs the test suite
 
-`npm run zxp`
+`yarn zxp`
 
 - Builds and bundles your project into a zxp for publishing in the `dist/zxp` folder
 
-`npm run zip`
+`yarn zip`
 
 - Bundles your zxp and specified assets to a zip archive in the `dist/zip` folder
 
-`npm run watch`
+`yarn watch`
 
 - Runs in watch mode with HMR Hot-reloading.
 - Both JS and ExtendScript folders re-build on changes
 
-`npm run symlink`
+`yarn symlink`
 
 - Creates a symlink to the extensions folder
 
-`npm run delsymlink`
+`yarn delsymlink`
 
 - Deletes the symlink to the extensions folder
 
-`npm run codegen`
+`yarn codegen`
 
 - Generates TypeScript types from GraphQL queries
 
-`npm run watch-codegen`
+`yarn watch-codegen`
 
 - Watches for changes and generates TypeScript types from GraphQL queries
 
