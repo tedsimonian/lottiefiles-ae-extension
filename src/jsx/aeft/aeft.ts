@@ -1,17 +1,17 @@
 // import clipboard from "clipboardy";
 
-enum LottieLayerType {
+export enum LottieLayerType {
   SHAPE = 4,
   TEXT = 5,
   IMAGE = 2,
 }
 
-enum LottieAnimationType {
+export enum LottieAnimationType {
   STATIC = 0,
   ANIMATED = 1,
 }
 
-enum LottieShapeType {
+export enum LottieShapeType {
   RECTANGLE = "rc",
   ELLIPSE = "el",
   FILL = "fl",
@@ -21,17 +21,17 @@ enum LottieShapeType {
   TRANSFORM = "tr",
 }
 
-enum LottieAutoOrient {
+export enum LottieAutoOrient {
   NO = 0,
   YES = 1,
 }
 
-enum Lottie3DLayer {
+export enum Lottie3DLayer {
   NO = 0,
   YES = 1,
 }
 
-enum AdobeProperty {
+export enum AdobeProperty {
   CONTENTS = "Contents",
   RECTANGLE = "ADBE Vector Shape - Rect",
   ELLIPSE = "ADBE Vector Shape - Ellipse",
@@ -57,12 +57,12 @@ enum AdobeProperty {
 /**
  * Type for a composition on Adobe After Effects side
  */
-type Composition = {
+export type Composition = {
   id: number;
   name: string;
 };
 
-type LottieAnimation = {
+export type LottieAnimation = {
   v: string; // Version
   ip: number; // In-point of the animation
   op: number; // Out-point of the animation
@@ -77,11 +77,11 @@ type LottieAnimation = {
 };
 
 // Since I'm not using all Asset, I am not defining all the properties
-type Asset = {
+export type Asset = {
   id: string;
 };
 
-type Layer = {
+export type Layer = {
   ddd?: 0 | 1; // 3D layer (0: no, 1: yes)
   ty: number; // Layer type
   ind: number; // Layer index
@@ -97,7 +97,7 @@ type Layer = {
   ao?: 0 | 1; // Auto-orient along path (0: no, 1: yes)
 };
 
-type TransformProperties = {
+export type TransformProperties = {
   a: AnimatedValue<number[]>; // Anchor point
   p: AnimatedValue<number[]>; // Position
   s: AnimatedValue<number[]>; // Scale
@@ -107,14 +107,14 @@ type TransformProperties = {
   sa?: AnimatedValue<number>; // Skew axis
 };
 
-type AnimatedValue<T> = {
+export type AnimatedValue<T> = {
   a: 0 | 1; // Animation toggle (0: static, 1: animated)
   k: T; // Keyframe or static value
   ix?: number; // Index
 };
 
 // I am only using RectangleShape for now, we can define other shapes here
-type Shape =
+export type Shape =
   | EllipseShape
   | RectangleShape
   | FillShape
@@ -123,7 +123,7 @@ type Shape =
   | PathShape
   | TransformShape;
 
-type EllipseShape = {
+export type EllipseShape = {
   ty: "el"; // Shape type (Ellipse)
   nm: string; // Name
   p: AnimatedValue<number[]>; // Position
@@ -131,7 +131,7 @@ type EllipseShape = {
   d?: 1; // Direction
 };
 
-type RectangleShape = {
+export type RectangleShape = {
   ty: "rc"; // Shape type (Rectangle)
   nm: string; // Name
   p: AnimatedValue<number[]>; // Position
@@ -139,7 +139,7 @@ type RectangleShape = {
   r: AnimatedValue<number>; // Corner radius
 };
 
-type FillShape = {
+export type FillShape = {
   ty: "fl"; // Shape type (Fill)
   nm: string; // Name
   o: AnimatedValue<number>; // Opacity
@@ -147,7 +147,7 @@ type FillShape = {
   r?: 1; // Rule (optional)
 };
 
-type StrokeShape = {
+export type StrokeShape = {
   ty: "st"; // Shape type (Stroke)
   nm: string; // Name
   o: AnimatedValue<number>; // Opacity
@@ -159,12 +159,12 @@ type StrokeShape = {
   d?: Dash[]; // Dash pattern
 };
 
-type Dash = {
+export type Dash = {
   n: "o" | "d" | "g"; // Name (offset, dash, gap)
   v: AnimatedValue<number>; // Value
 };
 
-type GroupShape = {
+export type GroupShape = {
   ty: "gr"; // Shape type (Group)
   nm: string; // Name
   it: Shape[]; // Items within the group
@@ -172,14 +172,14 @@ type GroupShape = {
   cix?: number; // Containing index
 };
 
-type PathShape = {
+export type PathShape = {
   ty: "sh"; // Shape type (Path)
   nm: string; // Name
   ks: AnimatedValue<number[]>; // Keyframe values
   c?: boolean; // Closed (optional)
 };
 
-type TransformShape = {
+export type TransformShape = {
   ty: "tr"; // Transform type
   a: AnimatedValue<number[]>; // Anchor point
   p: AnimatedValue<number[]>; // Position
@@ -190,7 +190,7 @@ type TransformShape = {
   sa?: AnimatedValue<number>; // Skew axis (optional)
 };
 
-type Meta = {
+export type Meta = {
   g: string; // Generator name
   a?: string; // Author (optional)
   k?: string; // Keywords (optional)
@@ -203,7 +203,7 @@ type Meta = {
  * The UUID always starts with 'c' and is followed by 24 random alphanumeric characters.
  * @returns {string} A 25-character UUID-like string
  */
-const generateUUID = (): string => {
+export const generateUUID = (): string => {
   const CHAR_SET = "abcdefghijklmnopqrstuvwxyz0123456789";
   const UUID_LENGTH = 25;
   const UUID_PREFIX = "c";

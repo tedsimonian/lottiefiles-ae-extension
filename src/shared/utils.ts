@@ -14,7 +14,10 @@ export const cn = (...classes: (string | undefined | null)[]) => {
  * @param color2 - Second color in RGB format
  * @returns The contrast ratio between the two colors
  */
-const getContrastRatio = (color1: number[], color2: number[]): number => {
+export const getContrastRatio = (
+  color1: number[],
+  color2: number[]
+): number => {
   // Calculate the luminance for both colors
   const luminance1 = getLuminance(color1);
   const luminance2 = getLuminance(color2);
@@ -37,7 +40,7 @@ const getContrastRatio = (color1: number[], color2: number[]): number => {
  * @param rgb - Color in RGB format
  * @returns The relative luminance of the color
  */
-const getLuminance = (rgb: number[]): number => {
+export const getLuminance = (rgb: number[]): number => {
   // Convert RGB values to linear values using the sRGB color space formula
   const linearValues = rgb.map((v) => {
     const MAX_RGB_VALUE = 255;
@@ -79,7 +82,7 @@ const getLuminance = (rgb: number[]): number => {
  * @param hex - Color in hex format
  * @returns The color in RGB format
  */
-const hexToRgb = (hex: string): number[] => {
+export const hexToRgb = (hex: string): number[] => {
   // Regular expression to match shorthand hex color codes (e.g., #RGB)
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
 
