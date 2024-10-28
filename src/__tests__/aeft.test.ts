@@ -25,20 +25,7 @@ class AVLayer {}
 class CompItem {}
 
 beforeAll(() => {
-  (global as any).ShapeLayer = ShapeLayer;
-  (global as any).TextLayer = TextLayer;
-  (global as any).AVLayer = AVLayer;
-});
-
-afterAll(() => {
-  // Clean up global namespace
-  delete (global as any).ShapeLayer;
-  delete (global as any).TextLayer;
-  delete (global as any).AVLayer;
-});
-
-beforeAll(() => {
-  global.mockApp = createAEMock();
+  (global as any).app = createAEMock();
   (global as any).ShapeLayer = ShapeLayer;
   (global as any).TextLayer = TextLayer;
   (global as any).AVLayer = AVLayer;
@@ -46,6 +33,7 @@ beforeAll(() => {
 });
 
 afterAll(() => {
+  delete (global as any).app;
   delete (global as any).ShapeLayer;
   delete (global as any).TextLayer;
   delete (global as any).AVLayer;
@@ -129,7 +117,7 @@ describe("After Effects Integration", () => {
   // Add more integration tests here if needed
   // Note: Most AE-specific functions would need to be tested in the actual AE environment
   it("should be properly mocked", () => {
-    expect(global.mockApp.project.numItems).toBe(2);
+    expect(global.app.project.numItems).toBe(2);
   });
 });
 
@@ -303,7 +291,7 @@ describe("convertCompositionToLottieJSONPayload", () => {
       id: 1,
     };
 
-    global.mockApp.project.itemByID = () => mockComp;
+    (global as any).app.project.itemByID = () => mockComp;
 
     const result = convertCompositionToLottieJSONPayload(1);
 
@@ -336,8 +324,6 @@ describe("getAllCompositionsInProject", () => {
       },
     };
 
-    // Temporarily replace global.app
-    const originalApp = (global as any).app;
     (global as any).app = mockApp;
 
     const result = getAllCompositionsInProject();
@@ -346,9 +332,6 @@ describe("getAllCompositionsInProject", () => {
       { id: 1, name: "Comp 1" },
       { id: 2, name: "Comp 2" },
     ]);
-
-    // Restore original app
-    (global as any).app = originalApp;
   });
 });
 

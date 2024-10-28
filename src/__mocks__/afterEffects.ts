@@ -108,10 +108,6 @@ const createAEMock = (): AEApp => {
     endUndoGroup: jest.fn(),
   };
 
-  // Make mock available globally as both app and mockApp
-  (global as any).app = mock;
-  (global as any).mockApp = mock;
-
   return mock;
 };
 
