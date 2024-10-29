@@ -1,5 +1,3 @@
-import React from "react";
-
 import { CompositionItem } from "../components/composition-item";
 import { ClientComposition } from "../../types";
 import { RenderQueueItem } from "../useRenderQueue";
@@ -11,7 +9,7 @@ type CompositionListProps = {
   onRender: (item: ClientComposition) => void;
 };
 
-export const CompositionList: React.FC<CompositionListProps> = ({
+export const CompositionList = ({
   items,
   queue,
   onToggle,

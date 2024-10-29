@@ -12,13 +12,13 @@ type EmptyDataProps = {
 /**
  * Component to display when there is no data available
  */
-export const EmptyData: React.FC<EmptyDataProps> = ({
+export const EmptyData = ({
   message = "No data available",
   icon,
   className = "",
   borderStyle = "dashed",
   borderColor = "border-muted-foreground",
-}) => {
+}: EmptyDataProps) => {
   const borderClasses = `border-2 ${borderStyle} ${borderColor} rounded-lg`;
 
   return (

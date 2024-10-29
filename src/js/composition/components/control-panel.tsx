@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Button } from "../../../shared/components/ui/button";
 
 type ControlPanelProps = {
@@ -8,7 +6,7 @@ type ControlPanelProps = {
   selectedCount: number;
 };
 
-export const ControlPanel: React.FC<ControlPanelProps> = ({
+export const ControlPanel = ({
   selectedCount,
   isRendering,
   onRender,

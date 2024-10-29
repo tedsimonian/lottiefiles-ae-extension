@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { Loader2 } from "lucide-react";
 
@@ -10,7 +10,7 @@ import { EmptyData } from "../../../shared/components/empty-data";
 
 const QUERY_FETCH_LIMIT = 9;
 
-export const FeaturedAnimations: React.FC = () => {
+export const FeaturedAnimations = () => {
   const [hasNextPage, setHasNextPage] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 

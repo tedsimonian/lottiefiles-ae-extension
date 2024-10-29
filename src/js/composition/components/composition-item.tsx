@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Loader2, Copy, Play, Check } from "lucide-react";
+import { useState } from "react";
+import { Loader2, Copy, Play } from "lucide-react";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 import { Checkbox } from "../../../shared/components/ui/checkbox";
@@ -16,7 +16,7 @@ type CompositionItemProps = {
   onRender: (item: ClientComposition) => void;
 };
 
-export const CompositionItem: React.FC<CompositionItemProps> = ({
+export const CompositionItem = ({
   item,
   queueStatus,
   onToggle,

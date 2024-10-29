@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Input } from "../../../shared/components/ui/input";
 
 type SearchBarProps = {
@@ -7,10 +5,7 @@ type SearchBarProps = {
   onSearchChange: (term: string) => void;
 };
 
-export const SearchBar: React.FC<SearchBarProps> = ({
-  searchTerm,
-  onSearchChange,
-}: SearchBarProps) => {
+export const SearchBar = ({ searchTerm, onSearchChange }: SearchBarProps) => {
   return (
     <Input
       type="text"

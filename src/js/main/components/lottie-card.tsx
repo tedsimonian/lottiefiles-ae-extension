@@ -43,7 +43,7 @@ const fetchLottieJson = async (url: string) => {
   return response.json();
 };
 
-export const LottieCard: React.FC<LottieCardProps> = ({ animation }) => {
+export const LottieCard = ({ animation }: LottieCardProps) => {
   const [isCopied, setIsCopied] = useState(false);
   const [loading, setLoading] = useState(true);
   const { data: lottieJson } = useQuery({

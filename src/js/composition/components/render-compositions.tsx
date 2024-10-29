@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { SearchBar } from "./search-bar";
 import { CompositionList } from "./composition-list";
@@ -15,9 +15,13 @@ const renderCompositionToLottieJSONPayload = async (
   return evalTS("convertCompositionToLottieJSONPayload", comp.id);
 };
 
-export const RenderCompositions: React.FC<{
+type RenderCompositionsProps = {
   compositions: ClientComposition[];
-}> = ({ compositions }) => {
+};
+
+export const RenderCompositions = ({
+  compositions,
+}: RenderCompositionsProps) => {
   const [items, setItems] = useState(compositions);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -134,7 +138,6 @@ export const RenderCompositions: React.FC<{
         isRendering={isProcessing}
         onRender={bulkRender}
       />
-      {}
     </div>
   );
 };

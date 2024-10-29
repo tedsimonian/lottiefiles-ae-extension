@@ -1,4 +1,3 @@
-import React from "react";
 import { useQuery } from "react-query";
 import { Loader2 } from "lucide-react";
 
@@ -18,7 +17,7 @@ const getAllCompositionsInProject = async (): Promise<ClientComposition[]> => {
   }));
 };
 
-export const CompositionPanel: React.FC = () => {
+export const CompositionPanel = () => {
   // I use react query to fetch the compositions, so we can handle loading states better
   const { data, isLoading } = useQuery(
     "compositions",
@@ -48,4 +47,5 @@ export const CompositionPanel: React.FC = () => {
     </div>
   );
 };
+
 export default CompositionPanel;
