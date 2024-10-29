@@ -1,5 +1,9 @@
 import { useState } from "react";
-import { DotLottie, DotLottieReact } from "@lottiefiles/dotlottie-react";
+import {
+  Player,
+  Controls,
+  PlayerEvent,
+} from "@lottiefiles/react-lottie-player";
 import { Check, Copy, Download, Heart, Loader2 } from "lucide-react";
 import { useQuery } from "react-query";
 
@@ -40,19 +44,14 @@ const fetchLottieJson = async (url: string) => {
 };
 
 export const LottieCard: React.FC<LottieCardProps> = ({ animation }) => {
-  const [dotLottie, setDotLottie] = useState<DotLottie | null>(null);
   const [isCopied, setIsCopied] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   const { data: lottieJson } = useQuery({
     queryKey: ["lottieJson", animation.node.jsonUrl],
     queryFn: () => fetchLottieJson(animation.node.jsonUrl ?? ""),
     enabled: !!animation.node.jsonUrl, // don't fetch if no url is available
     cacheTime: 1000 * 60 * 60, // Cache for 1 hour
   });
-
-  const dotLottieRefCallback = (dotLottie: DotLottie) => {
-    setDotLottie(dotLottie);
-  };
 
   /**
    * The Clipboard API functionality is not supported in Adobe CEP, we are using a deprecated method to copy the JSON to the clipboard.
@@ -70,16 +69,24 @@ export const LottieCard: React.FC<LottieCardProps> = ({ animation }) => {
       style={{ backgroundColor: animation.node.bgColor || "white" }}
     >
       <CardHeader className="p-4 flex-grow justify-center">
-        {animation.node.lottieUrl && (
+        {animation.node.jsonUrl && (
           <div className="flex justify-center items-center">
-            <DotLottieReact
-              src={animation.node.lottieUrl}
-              loop
-              autoplay
-              dotLottieRefCallback={dotLottieRefCallback}
-              style={{ maxWidth: "350px" }}
-            />
-            {!dotLottie && <Loader2 className="h-8 w-8 animate-spin" />}
+            <Player
+              onEvent={(event) => {
+                if (event === PlayerEvent.Load) {
+                  setLoading(false);
+                }
+              }}
+              src={animation.node.jsonUrl}
+              style={{ height: "150px" }}
+            >
+              <Controls
+                visible={true}
+                buttons={["play", "frame"]}
+                transparentTheme={true}
+              />
+            </Player>
+            {loading && <Loader2 className="h-8 w-8 animate-spin" />}
           </div>
         )}
       </CardHeader>
