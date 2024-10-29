@@ -12,8 +12,8 @@ Each goal is implemented in a separate panel. The `main` panel is the main panel
 ## Getting Started
 
 1. Install dependencies `yarn`
-2. Build the project `yarn build` **IMPORTANT** This must be run before running the project in dev mode, otherwise it won't be able to run
-3. Generate GraphQL types `yarn codegen`
+2. Generate GraphQL types `yarn codegen`
+3. Build the project `yarn build` **IMPORTANT** This must be run before running the project in dev mode, otherwise it won't be able to run
 4. Run the project in dev mode `yarn dev`
 5. To test the composition panel:
    1. Open Adobe After Effects
@@ -23,8 +23,9 @@ Each goal is implemented in a separate panel. The `main` panel is the main panel
 
 ## Notes
 
-- The main panel that displays the featured animations runs into a memory out of bounds error after fetching past 40+ Lottie Animations from the GrapqhQL endpoint of `featuredPublicAnimations`.
-  - I have tried fix this issue, but I have come to the conclusion that it is an issue with the GraphQL endpoint and not the extension.
+- The main panel that displays the featured animations runs into a memory out of bounds error after fetching past 40+ Lottie Animations from the GrapqhQL endpoint of `featuredPublicAnimations` using the `@lottiefiles/dotlottie-react` player.
+  - To fix this, I have switched to using the `@lottiefiles/react-lottie-player` player, which does not have this issue.
+  - I do not auto play the animations, because after loading a lot of animations, the extension slows down to a crawl.
 - This project completes the bonus challenge of creating a simple render function to covert a composition into a lottie file.
   - The render function is implemented in `src/js/composition/aeft/aeft.ts`
   - The render function just passes a lottie json object
